@@ -14,11 +14,15 @@
         </li>
       </ul>
     </div>
+    <metamask-connect></metamask-connect>
   </nav>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-
-export default defineComponent({ components: {} });
+import MetamaskConnect from "@/components/MetamaskConnect.vue";
+export default defineComponent({
+  methods: {},
+  components: { MetamaskConnect },
+});
 </script>
 <style></style>
