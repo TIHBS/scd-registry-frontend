@@ -1,17 +1,16 @@
 <template>
-  <div class="container scd-item">
-    <div class="row">
-      <div class="col-sm" style="text-align: left">
-        <div>Name: {{ name }}</div>
-        <div>Author: {{ author }}</div>
+  <div class="scd-item row">
+    <div class="col-sm left-column">
+      <div>Name: {{ name }}</div>
+      <br />
+      <div>Author: {{ author }}</div>
+    </div>
+    <div class="col-sm right-column">
+      <div>
+        Location: <a v-bind:href="link">{{ link }}</a>
       </div>
-      <div class="col-sm" style="text-align: right">
-        <div>
-          Location: <a v-bind:href="link">{{ link }}</a>
-        </div>
-        <div>Signature: {{ signature }}</div>
-        <div>Address: {{ address }}</div>
-      </div>
+      <div>Signature: {{ signature }}</div>
+      <div>Address: {{ address }}</div>
     </div>
   </div>
 </template>
@@ -30,8 +29,10 @@ export default defineComponent({
 });
 </script>
 <style>
-.scd-item {
-  outline-style: solid;
-  margin-top: 10px;
+.left-column {
+  text-align: left;
+}
+.right-column {
+  text-align: right;
 }
 </style>

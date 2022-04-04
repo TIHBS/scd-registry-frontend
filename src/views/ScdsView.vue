@@ -1,17 +1,29 @@
 <template>
   <h1>This is the SCD list page</h1>
-  <label for="query-input">Query: </label>
-  <input type="text" id="query-input" name="query" autocomplete="off" />
-  <li v-for="item in ToDoItems" :key="item.id">
-    <scd-item
-      :id="item.id"
-      :name="item.name"
-      :author="item.author"
-      :link="item.link"
-      :signature="item.signature"
-      :address="item.address"
-    ></scd-item>
-  </li>
+  <h2><label for="query-input">Query: </label></h2>
+  <input
+    type="text"
+    class="form-control"
+    id="query-input"
+    name="query"
+    autocomplete="off"
+  />
+  <ul class="scd-item-list list-group-flush container">
+    <li
+      v-for="item in ToDoItems"
+      :key="item.id"
+      class="row list-group-item justify-content-between align-items-start"
+    >
+      <scd-item
+        :id="item.id"
+        :name="item.name"
+        :author="item.author"
+        :link="item.link"
+        :signature="item.signature"
+        :address="item.address"
+      ></scd-item>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
@@ -37,4 +49,8 @@ export default defineComponent({
   },
 });
 </script>
-<style></style>
+<style>
+.scd-item-list {
+  margin-top: 10px;
+}
+</style>

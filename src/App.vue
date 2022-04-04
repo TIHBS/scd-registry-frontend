@@ -16,7 +16,7 @@
     </div>
   </nav>
   <br />
-  <router-view />
+  <div class="viewport"><router-view /></div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -39,5 +39,10 @@ nav {
 
 nav a {
   font-weight: bold;
+}
+
+.viewport {
+  margin-left: 15%;
+  margin-right: 15%;
 }
 </style>
