@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 4000",
+    "serve:ipfs": "ts-node scripts/serve-with-ipfs.ts",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
@@ -41,6 +42,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
+    "ipfs-core": "^0.14.1",
     "prettier": "^2.4.1",
     "ts-node": "^10.7.0",
     "typescript": "~4.5.5"
