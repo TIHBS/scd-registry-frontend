@@ -1,6 +1,10 @@
 <template>
   <span v-if="isLoggedIn" class="navbar-text">{{ computedAddress }}</span>
-  <div v-else-if="waiting" class="spinner-border" role="status"></div>
+  <div
+    v-else-if="waiting"
+    class="spinner-border btn-outline-success"
+    role="status"
+  ></div>
   <div v-else>
     <button
       v-if="isMetamaskSupported"
