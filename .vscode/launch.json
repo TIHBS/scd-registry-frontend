@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "vuejs: chrome",
+      "url": "http://localhost:4000",
+      "webRoot": "${workspaceFolder}/src",
+      "breakOnLoad": true,
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "vuejs: firefox",
+      "url": "http://localhost:4000",
+      "webRoot": "${workspaceFolder}/src",
+      "pathMappings": [
+        {
+          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "path": "${workspaceFolder}/src/components"
+        },
+        {
+          "url": "webpack://decentralised-scd-registry-frontend/src/metamask",
+          "path": "${workspaceFolder}/src/metamask"
+        },
+        {
+          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "path": "${workspaceFolder}/src/components"
+        },
+        {
+          "url": "webpack:///src/",
+          "path": "${webRoot}/"
+        }
+      ]
+    }
+  ]
+}

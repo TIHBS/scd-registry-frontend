@@ -1,47 +1,39 @@
 <template>
-  <div v-if="isMetamaskSupported">
+  <div v-if="!isLoggedIn">
     <button
+      v-if="isMetamaskSupported"
       class="btn btn-outline-success my-2 my-sm-0"
       @click="connectWallet"
       type="button"
     >
       Connect Metamask
     </button>
+    <span v-else class="navbar-text">Install Metamask</span>
   </div>
-  <div v-else-if="isLoggedIn">{{ address }}</div>
-  <div v-else><span class="navbar-text">Install Metamask</span></div>
+  <span v-else class="navbar-text">{{ computedAddress }}</span>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed, onMounted, ref } from "vue";
 import { Signer } from "ethers";
 import {
   checkIfMetamaskIsInstalled,
-  connectWallet,
-  isLoggedIn,
-} from "@/Metamask/Metamask";
-export default defineComponent({
-  methods: {
-    async connectWallet() {
-      this.signer = await connectWallet(window);
-      this.isLoggedIn = true;
-      this.address = await this.signer.getAddress();
-    },
-  },
-  data() {
-    return {
-      isMetamaskSupported: false,
-      isLoggedIn: false,
-      signer: undefined as unknown as Signer,
-      address: "",
-    };
-  },
-  components: {},
-  async mounted() {
-    this.isMetamaskSupported = checkIfMetamaskIsInstalled(window);
-    this.isLoggedIn = await isLoggedIn(this.signer);
-    this.address = await this.signer?.getAddress();
-    console.log(this.address);
-  },
-});
+  connectMetamask,
+  truncateAddress,
+} from "@/metamask/Metamask";
+
+const isMetamaskSupported = ref(false);
+const signer = ref<Signer>();
+const address = ref("");
+const isLoggedIn = ref(false);
+
+onMounted(
+  () => (isMetamaskSupported.value = checkIfMetamaskIsInstalled(window))
+);
+
+async function connectWallet() {
+  [signer.value, address.value] = await connectMetamask(window);
+  isLoggedIn.value = true;
+}
+const computedAddress = computed(() => truncateAddress(address.value));
 </script>
 <style></style>
