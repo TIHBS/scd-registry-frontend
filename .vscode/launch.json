@@ -24,6 +24,14 @@
           "path": "${workspaceFolder}/src/components"
         },
         {
+          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "path": "${workspaceFolder}/src/components"
+        },
+        {
+          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "path": "${workspaceFolder}/src/components"
+        },
+        {
           "url": "webpack://decentralised-scd-registry-frontend/src/metamask",
           "path": "${workspaceFolder}/src/metamask"
         },

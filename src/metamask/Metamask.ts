@@ -11,10 +11,8 @@ export async function connectMetamask(
   return [signer, address];
 }
 
-export async function isLoggedIn(signer: Signer): Promise<boolean> {
-  const z = signer && (await signer.getAddress()) != "";
-  console.log(z);
-  return signer && (await signer.getAddress()) != "";
+export async function checkIfLoggedIn(signer: Signer): Promise<boolean> {
+  return (await signer.getAddress()) != "";
 }
 
 export function checkIfMetamaskIsInstalled(window: Window): boolean {

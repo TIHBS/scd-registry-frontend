@@ -1,5 +1,6 @@
 <template>
-  <div v-if="!isLoggedIn">
+  <span v-if="isLoggedIn" class="navbar-text">{{ computedAddress }}</span>
+  <div v-else>
     <button
       v-if="isMetamaskSupported"
       class="btn btn-outline-success my-2 my-sm-0"
@@ -10,7 +11,6 @@
     </button>
     <span v-else class="navbar-text">Install Metamask</span>
   </div>
-  <span v-else class="navbar-text">{{ computedAddress }}</span>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
@@ -32,8 +32,9 @@ onMounted(
 
 async function connectWallet() {
   [signer.value, address.value] = await connectMetamask(window);
-  isLoggedIn.value = true;
+  isLoggedIn.value = address.value != "";
 }
+
 const computedAddress = computed(() => truncateAddress(address.value));
 </script>
 <style></style>
