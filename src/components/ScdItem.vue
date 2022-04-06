@@ -14,19 +14,15 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  props: {
-    id: String!,
-    name: String!,
-    author: String!,
-    link: String!,
-    signature: String!,
-    address: String!,
-  },
-});
+<script setup lang="ts">
+const props = defineProps<{
+  id: String;
+  name: String;
+  author: String;
+  link: String;
+  signature: String;
+  address: String;
+}>();
 </script>
 <style>
 .left-column {
