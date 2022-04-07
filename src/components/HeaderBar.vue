@@ -19,6 +19,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+// @ts-ignore
 import MetamaskConnect from "@/components/MetamaskConnect.vue";
 export default defineComponent({
   methods: {},

@@ -17,7 +17,9 @@
             />
           </div>
           <div class="col-1">
-            <button type="submit" class="btn btn-outline-primary">Add</button>
+            <button type="submit" class="btn btn-outline-primary">
+              <i class="bi bi-search"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -35,3 +37,5 @@ function onSubmit() {
   console.log(query.value);
 }
 </script>
+
+<style></style>
