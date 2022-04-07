@@ -22,7 +22,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import uniqueId from "lodash.uniqueid";
+// @ts-ignore
 import ScdItem from "@/components/ScdItem.vue";
+// @ts-ignore
 import QueryForm from "@/components/QueryForm.vue";
 
 const items = ref<{}[]>([]);
