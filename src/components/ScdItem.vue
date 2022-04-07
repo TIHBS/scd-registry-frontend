@@ -1,13 +1,13 @@
 <template>
   <div class="scd-item row">
-    <div class="col-sm left-column">
+    <div class="col-3 left-column">
       <div>Name: {{ name }}</div>
       <br />
       <div>Author: {{ author }}</div>
     </div>
-    <div class="col-sm right-column">
+    <div class="col-9 right-column">
       <div>
-        Location: <a v-bind:href="link">{{ link }}</a>
+        Location: <a v-bind:href="url">{{ url }}</a>
       </div>
       <div>Signature: {{ signature }}</div>
       <div>Address: {{ address }}</div>
@@ -19,7 +19,7 @@ const props = defineProps<{
   id: String;
   name: String;
   author: String;
-  link: String;
+  url: String;
   signature: String;
   address: String;
 }>();

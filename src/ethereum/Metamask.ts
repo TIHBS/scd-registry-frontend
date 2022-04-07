@@ -1,4 +1,4 @@
-import { ethers, providers, Signer } from "ethers";
+import { providers, Signer } from "ethers";
 
 export async function connectMetamask(
   window: Window

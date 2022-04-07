@@ -19,18 +19,18 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import { Signer } from "ethers";
 import {
   checkIfMetamaskIsInstalled,
   connectMetamask,
   truncateAddress,
 } from "@/ethereum/Metamask";
+import { ethereumConnector } from "@/ethereum/EthereumConnector";
 
 const isMetamaskSupported = ref(false);
-const signer = ref<Signer>();
 const address = ref("");
 const isLoggedIn = ref(false);
 const waiting = ref(false);
+
 onMounted(
   () => (isMetamaskSupported.value = checkIfMetamaskIsInstalled(window))
 );
@@ -38,10 +38,16 @@ onMounted(
 async function connectWallet() {
   connectMetamask(window)
     .then((result) => {
-      [signer.value, address.value] = result;
-      isLoggedIn.value = address.value != "";
+      const [signer, signerAddress] = result;
+      isLoggedIn.value = signerAddress != "";
+      if (isLoggedIn.value) {
+        ethereumConnector.setSigner(signer);
+        address.value = signerAddress;
+      }
     })
-    .catch((err) => {})
+    .catch((err) => {
+      console.error(err);
+    })
     .finally(() => (waiting.value = false));
   waiting.value = true;
 }

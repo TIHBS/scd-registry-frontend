@@ -14,16 +14,14 @@
         </li>
       </ul>
     </div>
+    <store-mock-data></store-mock-data>
     <metamask-connect></metamask-connect>
   </nav>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 // @ts-ignore
 import MetamaskConnect from "@/components/MetamaskConnect.vue";
-export default defineComponent({
-  methods: {},
-  components: { MetamaskConnect },
-});
+// @ts-ignore
+import StoreMockData from "@/components/StoreMockData.vue";
 </script>
 <style></style>

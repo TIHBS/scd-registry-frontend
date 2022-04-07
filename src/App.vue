@@ -3,11 +3,9 @@
   <br />
   <div class="viewport"><router-view /></div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+// @ts-ignore
 import HeaderBar from "@/components/HeaderBar.vue";
-
-export default defineComponent({ components: { HeaderBar } });
 </script>
 
 <style>

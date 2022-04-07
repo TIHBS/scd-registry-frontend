@@ -1,9 +1,6 @@
 <template>
   <div>
     <form @submit.prevent="onSubmit">
-      <h2 class="label-wrapper">
-        <label for="query-input"> Query </label>
-      </h2>
       <div class="container">
         <div class="row">
           <div class="col-11">
@@ -29,12 +26,14 @@
 
 <script setup lang="ts">
 import { ref } from "@vue/reactivity";
+import { ethereumConnector } from "@/ethereum/EthereumConnector";
 
-const props = defineProps<{}>();
+const emit = defineEmits<{ (e: "queryResults", results: {}[]): void }>();
 
 const query = ref("");
-function onSubmit() {
-  console.log(query.value);
+async function onSubmit() {
+  const scds = await ethereumConnector.query(query.value);
+  emit("queryResults", scds);
 }
 </script>
 
