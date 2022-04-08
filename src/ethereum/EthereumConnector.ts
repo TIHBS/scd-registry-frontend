@@ -1,5 +1,5 @@
 import { Registry__factory } from "../../external/decentralised-scd-registry/src/types/factories/Registry__factory";
-import { Signer } from "ethers";
+import { ContractTransaction, Signer } from "ethers";
 import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
 import scds from "./SCDs";
 
@@ -20,22 +20,14 @@ class EthereumConnector {
     throw new Error("You are not logged in!");
   }
 
-  async store() {
-    const registry = this.createRegistryContract();
-
-    await registry.storeMultiple(scds);
+  async store(): Promise<ContractTransaction> {
+    return await this.createRegistryContract().storeMultiple(scds);
   }
 
   async query(
     query: string
   ): Promise<Registry.SCDMetadataWithIDStructOutput[]> {
-    const registry = this.createRegistryContract();
-    return registry.query(query);
-  }
-
-  async fetch(): Promise<Registry.SCDMetadataWithIDStructOutput[]> {
-    const registry = this.createRegistryContract();
-    return registry.retrieveByAuthor("TestAuthor1");
+    return this.createRegistryContract().query(query);
   }
 }
 

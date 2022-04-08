@@ -30,14 +30,15 @@ onMounted(
 );
 
 async function storeMockData() {
-  ethereumConnector
-    .store()
-    .then()
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => (waiting.value = false));
   waiting.value = true;
+  try {
+    const transaction = await ethereumConnector.store();
+    await transaction.wait();
+  } catch (error) {
+    throw error;
+  } finally {
+    waiting.value = false;
+  }
 }
 </script>
 <style>
