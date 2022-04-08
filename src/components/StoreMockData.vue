@@ -9,8 +9,8 @@
       <button
         v-if="isMetamaskSupported"
         class="btn btn-outline-success my-2 my-sm-0"
-        @click="storeMockData"
         type="button"
+        @click="storeMockData"
       >
         Store Mock Data
       </button>
@@ -25,17 +25,13 @@ import { ethereumConnector } from "@/ethereum/EthereumConnector";
 const isMetamaskSupported = ref(false);
 const waiting = ref(false);
 
-onMounted(
-  () => (isMetamaskSupported.value = checkIfMetamaskIsInstalled(window))
-);
+onMounted(() => (isMetamaskSupported.value = checkIfMetamaskIsInstalled()));
 
 async function storeMockData() {
   waiting.value = true;
   try {
     const transaction = await ethereumConnector.store();
     await transaction.wait();
-  } catch (error) {
-    throw error;
   } finally {
     waiting.value = false;
   }

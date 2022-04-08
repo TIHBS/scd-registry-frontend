@@ -9,8 +9,8 @@
     <button
       v-if="isMetamaskSupported"
       class="btn btn-outline-success my-2 my-sm-0"
-      @click="connectWallet"
       type="button"
+      @click="connectWallet"
     >
       Connect Metamask
     </button>
@@ -20,36 +20,46 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import {
+  checkIfLoggedIn,
   checkIfMetamaskIsInstalled,
   connectMetamask,
   truncateAddress,
 } from "@/ethereum/Metamask";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
+import "@/util/Window";
 
 const isMetamaskSupported = ref(false);
 const address = ref("");
 const isLoggedIn = ref(false);
 const waiting = ref(false);
 
-onMounted(
-  () => (isMetamaskSupported.value = checkIfMetamaskIsInstalled(window))
-);
+onMounted(async () => {
+  isMetamaskSupported.value = checkIfMetamaskIsInstalled();
+  isLoggedIn.value = await checkIfLoggedIn();
+  if (isLoggedIn.value) {
+    connectWallet();
+  }
+  window.ethereum.on("accountsChanged", (accounts: string[]) => {
+    if (accounts.length == 0) {
+      isLoggedIn.value = false;
+      ethereumConnector.setSigner(undefined);
+    }
+  });
+});
 
 async function connectWallet() {
-  connectMetamask(window)
-    .then((result) => {
-      const [signer, signerAddress] = result;
-      isLoggedIn.value = signerAddress != "";
-      if (isLoggedIn.value) {
-        ethereumConnector.setSigner(signer);
-        address.value = signerAddress;
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => (waiting.value = false));
-  waiting.value = true;
+  try {
+    waiting.value = true;
+    const signer = await connectMetamask();
+    const signerAddress = await signer.getAddress();
+    isLoggedIn.value = signerAddress != "";
+    if (isLoggedIn.value) {
+      ethereumConnector.setSigner(signer);
+      address.value = signerAddress;
+    }
+  } finally {
+    waiting.value = false;
+  }
 }
 
 const computedAddress = computed(() => truncateAddress(address.value));

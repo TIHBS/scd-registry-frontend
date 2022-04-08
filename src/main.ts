@@ -15,6 +15,14 @@ app.use(Toast, {
   position: POSITION.BOTTOM_RIGHT,
 });
 
-app.config.errorHandler = (err, vm, info) => {
-  useToast().error((err as any).message);
+interface ErrorMessage {
+  message: string;
+}
+
+app.config.errorHandler = (err, _vm, _info) => {
+  useToast().error((err as ErrorMessage).message);
+};
+
+app.config.warnHandler = (msg, _vm, _info) => {
+  useToast().warning(msg);
 };

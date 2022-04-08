@@ -7,7 +7,7 @@
     </div>
     <div class="col-9 right-column">
       <div>
-        Location: <a v-bind:href="url">{{ url }}</a>
+        Location: <a :href="url">{{ url }}</a>
       </div>
       <div>Signature: {{ signature }}</div>
       <div>Address: {{ address }}</div>
@@ -15,13 +15,15 @@
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps<{
-  id: String;
-  name: String;
-  author: String;
-  url: String;
-  signature: String;
-  address: String;
+import { defineProps } from "vue";
+
+defineProps<{
+  id: string;
+  name: string;
+  author: string;
+  url: string;
+  signature: string;
+  address: string;
 }>();
 </script>
 <style>

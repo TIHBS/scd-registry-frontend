@@ -1,22 +1,21 @@
 import { providers, Signer } from "ethers";
 
-export async function connectMetamask(
-  window: Window
-): Promise<[Signer, string]> {
-  const provider = new providers.Web3Provider((window as any).ethereum, "any");
+export async function connectMetamask(): Promise<Signer> {
+  const provider = new providers.Web3Provider(window.ethereum, "any");
   // Prompt user for account connections
   await provider.send("eth_requestAccounts", []);
   const signer = provider.getSigner();
-  const address = await signer.getAddress();
-  return [signer, address];
+  return signer;
 }
 
-export async function checkIfLoggedIn(signer: Signer): Promise<boolean> {
-  return (await signer.getAddress()) != "";
+export async function checkIfLoggedIn(): Promise<boolean> {
+  const provider = new providers.Web3Provider(window.ethereum, "any");
+  const accounts = await provider.listAccounts();
+  return accounts.length != 0;
 }
 
-export function checkIfMetamaskIsInstalled(window: Window): boolean {
-  return typeof (window as any).ethereum !== undefined;
+export function checkIfMetamaskIsInstalled(): boolean {
+  return typeof window.ethereum !== undefined;
 }
 
 export function truncateAddress(address: string) {

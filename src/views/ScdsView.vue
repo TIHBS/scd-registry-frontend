@@ -1,6 +1,6 @@
 <template>
   <h1>This is the SCD list page</h1>
-  <query-form @queryResults="onQueryResults"></query-form><br />
+  <query-form @query-results="onQueryResults"></query-form><br />
   <h2>{{ computedNumberOfResults }}</h2>
   <ul class="scd-item-list list-group-flush container">
     <div v-if="items.length > 0">

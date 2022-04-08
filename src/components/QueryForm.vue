@@ -5,11 +5,11 @@
         <div class="row">
           <div class="col-11">
             <input
-              type="text"
               id="query-input"
+              v-model.lazy.trim="query"
+              type="text"
               name="query"
               autocomplete="off"
-              v-model.lazy.trim="query"
               class="form-control"
             />
           </div>
@@ -25,10 +25,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "@vue/reactivity";
+import { ref, defineEmits } from "vue";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 
-const emit = defineEmits<{ (e: "queryResults", results: {}[]): void }>();
+const emit = defineEmits<{
+  (e: "queryResults", results: unknown[]): void;
+}>();
 
 const query = ref("");
 async function onSubmit() {
