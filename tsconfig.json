@@ -11,7 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "baseUrl": ".",
     "types": ["webpack-env", "mocha", "chai", "node"],
     "paths": {
