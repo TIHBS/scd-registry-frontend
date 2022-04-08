@@ -1,29 +1,29 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import ScdsView from "@/views/ScdsView.vue";
+import RegisterView from "@/views/RegisterView.vue";
+import SettingsView from "@/views/SettingsView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/scds" },
   {
     path: "/scds",
     name: "scds",
-    component: () =>
-      import(/* webpackChunkName: "scds-view" */ "../views/ScdsView.vue"),
+    component: ScdsView,
   },
   {
     path: "/register",
     name: "register",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/RegisterView.vue"),
+    component: RegisterView,
   },
   {
     path: "/settings",
     name: "settings",
-    component: () =>
-      import(/* webpackChunkName: "settings" */ "../views/SettingsView.vue"),
+    component: SettingsView,
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
 });
 
