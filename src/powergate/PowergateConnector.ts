@@ -1,4 +1,6 @@
-import { createPow, Pow } from "@textile/powergate-client";
+import { createPow, Pow, powTypes } from "@textile/powergate-client";
+import { Buffer } from "buffer";
+import { readFileSync } from "fs";
 import { useToast } from "vue-toastification";
 
 class PowergateConnector {
@@ -28,6 +30,33 @@ class PowergateConnector {
     this.checkIfInitialized();
     const { user } = await this.pow!.admin.users.create();
     return user ? user.token : "";
+  }
+
+  async upload(file: File) {
+    this.checkIfInitialized();
+    const toast = useToast();
+    const buffer = new Uint8Array(Buffer.from(await file.arrayBuffer()));
+
+    const { cid } = await this.pow!.data.stage(buffer);
+
+    // store the data using the default storage configuration
+    const { jobId } = await this.pow!.storageConfig.apply(cid);
+
+    // watch the job status to see the storage process progressing
+    const jobsCancel = this.pow!.storageJobs.watch((job) => {
+      if (job.status === powTypes.JobStatus.JOB_STATUS_CANCELED) {
+        toast.warning("job canceled");
+      } else if (job.status === powTypes.JobStatus.JOB_STATUS_FAILED) {
+        toast.error("job failed");
+      } else if (job.status === powTypes.JobStatus.JOB_STATUS_SUCCESS) {
+        toast.success("job success!");
+      }
+    }, jobId);
+
+    // watch all log events for a cid
+    const logsCancel = this.pow!.data.watchLogs((logEvent) => {
+      toast.info(`received event for cid ${logEvent.cid}`);
+    }, cid);
   }
 
   private checkIfInitialized() {

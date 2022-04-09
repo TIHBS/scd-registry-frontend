@@ -1,20 +1,26 @@
 <template>
   <div class="power-gate">
     <h1>This is the Powergate page</h1>
+    <file-upload></file-upload>
+    <br />
     <button
       @click="fetchWalletAddress"
       type="button"
-      class="btn btn-outline-primary"
+      class="btn btn-outline-primary button-margin"
     >
       Fetch wallet address
     </button>
-    <button @click="createUser" type="button" class="btn btn-outline-primary">
+    <button
+      @click="createUser"
+      type="button"
+      class="btn btn-outline-primary button-margin"
+    >
       Create user
     </button>
     <button
       @click="fetchBuildInfo"
       type="button"
-      class="btn btn-outline-primary"
+      class="btn btn-outline-primary button-margin"
     >
       Fetch build info
     </button>
@@ -36,12 +42,15 @@
 import { ref } from "vue";
 import { powergateConnector } from "@/powergate/PowergateConnector";
 import uniqueId from "lodash.uniqueid";
+// @ts-ignore
+import FileUpload from "@/components/FileUpload.vue";
 
 const displayedInfo = ref<string[]>([]);
 const displayedUser = ref("");
 const displayedBuildInfo = ref("");
-
+let file: File | null = null;
 let info: string[];
+
 async function fetchBuildInfo() {
   displayedBuildInfo.value = await powergateConnector.fetchBuildInfo();
 }
@@ -55,4 +64,10 @@ async function fetchWalletAddress() {
   displayedInfo.value = info;
 }
 </script>
-<style></style>
+
+<style>
+.button-margin {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+</style>
