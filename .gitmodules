@@ -1,3 +1,7 @@
 [submodule "external/decentralised-scd-registry"]
 	path = external/decentralised-scd-registry
 	url = git@github.com:GarondEisenfaust/decentralised-scd-registry.git
+[submodule "external/powergate"]
+	path = external/powergate
+	url = git@github.com:textileio/powergate.git
+	branch = v2.6.2
