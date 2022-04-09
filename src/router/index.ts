@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import ScdsView from "@/views/ScdsView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import SettingsView from "@/views/SettingsView.vue";
+import PowerGate from "@/views/PowerGate.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/scds" },
@@ -19,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/settings",
     name: "settings",
     component: SettingsView,
+  },
+  {
+    path: "/power-gate",
+    name: "power-gate",
+    component: PowerGate,
   },
 ];
 

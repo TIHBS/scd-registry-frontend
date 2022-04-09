@@ -12,6 +12,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/settings">Settings</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/power-gate">Powergate</router-link>
+        </li>
       </ul>
     </div>
     <store-mock-data></store-mock-data>
