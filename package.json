@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "postinstall": "ts-node scripts/post-install.ts"
+    "postinstall": "ts-node scripts/post-install.ts",
+    "debug:firefox": "firefox -start-debugger-server"
   },
   "dependencies": {
     "@textile/powergate-client": "^4.1.0",

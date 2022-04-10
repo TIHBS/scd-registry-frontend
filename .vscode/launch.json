@@ -14,10 +14,10 @@
     },
     {
       "type": "firefox",
-      "request": "launch",
+      "request": "attach",
       "name": "vuejs: firefox",
       "url": "http://localhost:4000",
-      "webRoot": "${workspaceFolder}/src",
+      "webRoot": "${workspaceFolder}/",
       "pathMappings": [
         {
           "url": "webpack://decentralised-scd-registry-frontend/src/components",

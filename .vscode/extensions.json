@@ -1,3 +1,3 @@
 {
-  "recommendations": ["octref.vetur"]
+  "recommendations": ["octref.vetur", "firefox-devtools.vscode-firefox-debug"]
 }
