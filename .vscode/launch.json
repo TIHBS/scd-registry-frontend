@@ -20,6 +20,14 @@
       "webRoot": "${workspaceFolder}/",
       "pathMappings": [
         {
+          "url": "webpack://decentralised-scd-registry-frontend/WebserverWizard.ts",
+          "path": "${workspaceFolder}/src/components/StorageWizard/WebserverWizard.ts"
+        },
+        {
+          "url": "webpack://decentralised-scd-registry-frontend/PowergateConnector.ts",
+          "path": "${workspaceFolder}/src/powergate/PowergateConnector.ts"
+        },
+        {
           "url": "webpack://decentralised-scd-registry-frontend/src/components",
           "path": "${workspaceFolder}/src/components"
         },
