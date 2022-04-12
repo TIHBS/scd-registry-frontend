@@ -9,7 +9,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "postinstall": "ts-node scripts/post-install.ts",
-    "debug:firefox": "firefox -start-debugger-server"
+    "debug:firefox": "firefox -start-debugger-server",
+    "start:contract": "docker-compose -f external/decentralised-scd-registry/docker-compose.yml up"
   },
   "dependencies": {
     "@textile/powergate-client": "^4.1.0",
