@@ -10,7 +10,8 @@
     "lint": "vue-cli-service lint",
     "postinstall": "ts-node scripts/post-install.ts",
     "debug:firefox": "firefox -start-debugger-server",
-    "start:contract": "docker-compose -f external/decentralised-scd-registry/docker-compose.yml up"
+    "start:contract": "docker-compose -f external/decentralised-scd-registry/docker-compose.yml up",
+    "start:webserver-storage": "docker-compose -f external/webserver-storage/docker-compose.yml up"
   },
   "dependencies": {
     "@textile/powergate-client": "^4.1.0",
@@ -27,6 +28,7 @@
     "util": "^0.12.4",
     "vue": "^3.2.31",
     "vue-class-component": "^8.0.0-0",
+    "vue-json-pretty": "^2.0.6",
     "vue-router": "^4.0.3",
     "vue-toastification": "^2.0.0-rc.5"
   },
@@ -37,6 +39,7 @@
     "@types/lodash.uniqueid": "^4.0.6",
     "@types/mocha": "^8.2.1",
     "@types/node": "^17.0.23",
+    "@types/node-fetch": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",

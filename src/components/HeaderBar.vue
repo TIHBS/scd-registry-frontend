@@ -15,6 +15,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/power-gate">Powergate</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/ipfs">IPFS</router-link>
+        </li>
       </ul>
     </div>
     <store-mock-data></store-mock-data>

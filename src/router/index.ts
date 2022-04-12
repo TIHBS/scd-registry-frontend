@@ -3,6 +3,7 @@ import ScdsView from "@/views/ScdsView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import SettingsView from "@/views/SettingsView.vue";
 import PowerGate from "@/views/PowerGate.vue";
+import IPFSView from "@/views/IPFSView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/scds" },
@@ -25,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/power-gate",
     name: "power-gate",
     component: PowerGate,
+  },
+  {
+    path: "/ipfs",
+    name: "ipfs",
+    component: IPFSView,
   },
 ];
 
