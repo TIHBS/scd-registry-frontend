@@ -30,7 +30,7 @@ onMounted(() => (isMetamaskSupported.value = checkIfMetamaskIsInstalled()));
 async function storeMockData() {
   waiting.value = true;
   try {
-    const transaction = await ethereumConnector.store();
+    const transaction = await ethereumConnector.storeMock();
     await transaction.wait();
   } finally {
     waiting.value = false;

@@ -40,14 +40,34 @@
       <ipfs v-if="storageType == StorageType.IPFS"></ipfs>
       <swarm v-if="storageType == StorageType.Swarm"></swarm>
       <br />
-      <div v-if="fetched" class="container">
-        <div class="row">
-          <div class="col-sm">
-            <VueJsonPretty :path="'res'" :data="scdJson"> </VueJsonPretty>
+      <form @submit.prevent="onSubmit">
+        <div v-if="fetched" class="container">
+          <div class="row">
+            <div class="col-sm border overflow-auto">
+              <VueJsonPretty :path="'res'" :data="scdJson" />
+            </div>
+            <div class="col-sm">
+              <button
+                @click="signAndTransform"
+                type="button"
+                class="btn transform-button btn-outline-primary"
+              >
+                <i class="bi bi-arrow-right">Sign and transform</i></button
+              ><br />
+              <button
+                :v-if="signed"
+                type="submit"
+                class="btn btn-outline-primary"
+              >
+                Store
+              </button>
+            </div>
+            <div :v-if="signed" class="col-sm border overflow-auto">
+              <VueJsonPretty :path="'res'" :data="metadataJson" />
+            </div>
           </div>
-          <div class="col-sm"></div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -60,21 +80,47 @@ import WebserverWizard from "@/components/storage-wizard/WebserverWizard.vue";
 import { ref } from "vue";
 // @ts-ignore
 import VueJsonPretty from "vue-json-pretty";
+import { ethereumConnector } from "@/ethereum/EthereumConnector";
+import { SCD } from "@/util/SCD";
+import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
 
 const storageType = ref<StorageType>(StorageType.None);
-const scdJson = ref<JSON | null>();
+const scdJson = ref<SCD | null>();
+const metadataJson = ref<Registry.SCDMetadataStruct>();
+
 const fetched = ref(false);
+const signed = ref(false);
+
+let currentUrl: string | null = null;
 
 function fetchedSomething() {
   return fetched.value;
 }
 
-function onFetchedSCD(scd: JSON | null) {
+async function onFetchedSCD(scd: SCD | null, url: string | null) {
   scdJson.value = scd;
+  currentUrl = url;
   fetched.value = scd != null;
+}
+
+async function signAndTransform() {
+  if (fetched.value) {
+    metadataJson.value = await ethereumConnector.scdToMetadata(
+      scdJson.value!,
+      currentUrl!
+    );
+  }
+}
+
+async function onSubmit() {
+  const transaction = await ethereumConnector.store(metadataJson.value!);
+  await transaction.wait();
 }
 </script>
 <style>
+.transform-button {
+  margin: 30px;
+}
 .dropdown-item {
   width: 100%;
 }

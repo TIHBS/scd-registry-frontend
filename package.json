@@ -14,6 +14,7 @@
     "start:webserver-storage": "docker-compose -f external/webserver-storage/docker-compose.yml up"
   },
   "dependencies": {
+    "@metamask/eth-sig-util": "^4.0.0",
     "@textile/powergate-client": "^4.1.0",
     "bootstrap-icons": "^1.8.1",
     "bootstrap-vue": "^2.21.2",

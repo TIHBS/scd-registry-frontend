@@ -25,14 +25,14 @@ import { ref } from "vue";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
 
 const emit = defineEmits<{
-  (e: "fetchedSCD", scd: JSON | null): void;
+  (e: "fetchedSCD", scd: JSON | null, url: string | null): void;
 }>();
 
 const url = ref("");
 
 async function onSubmit() {
   const result = await webserverWizard.fetchSCD(url.value);
-  emit("fetchedSCD", result);
+  emit("fetchedSCD", result, result ? url.value : null);
 }
 </script>
 <style></style>
