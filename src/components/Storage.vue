@@ -40,7 +40,7 @@
       <ipfs v-if="storageType == StorageType.IPFS"></ipfs>
       <swarm v-if="storageType == StorageType.Swarm"></swarm>
       <br />
-      <div class="container">
+      <div v-if="fetched" class="container">
         <div class="row">
           <div class="col-sm">
             <VueJsonPretty :path="'res'" :data="scdJson"> </VueJsonPretty>
@@ -62,10 +62,16 @@ import { ref } from "vue";
 import VueJsonPretty from "vue-json-pretty";
 
 const storageType = ref<StorageType>(StorageType.None);
-const scdJson = ref<JSON>();
+const scdJson = ref<JSON | null>();
+const fetched = ref(false);
 
-function onFetchedSCD(scd: JSON) {
+function fetchedSomething() {
+  return fetched.value;
+}
+
+function onFetchedSCD(scd: JSON | null) {
   scdJson.value = scd;
+  fetched.value = scd != null;
 }
 </script>
 <style>

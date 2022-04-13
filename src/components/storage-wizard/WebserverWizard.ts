@@ -1,16 +1,18 @@
 import fetch from "node-fetch";
 
 class WebserverWizard {
-  async fetchSCD(url: string): Promise<JSON> {
+  async fetchSCD(url: string): Promise<JSON | null> {
     const result = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-
-    const asJson = result.json();
-    return asJson;
+    try {
+      return await result.json();
+    } catch (error) {
+      return null;
+    }
   }
 }
 

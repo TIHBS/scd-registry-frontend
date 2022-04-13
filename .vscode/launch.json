@@ -21,6 +21,10 @@
       "pathMappings": [
         {
           "url": "webpack://decentralised-scd-registry-frontend/WebserverWizard.ts",
+          "path": "${workspaceFolder}/src/components/storage-wizard/WebserverWizard.ts"
+        },
+        {
+          "url": "webpack://decentralised-scd-registry-frontend/WebserverWizard.ts",
           "path": "${workspaceFolder}/src/components/StorageWizard/WebserverWizard.ts"
         },
         {
