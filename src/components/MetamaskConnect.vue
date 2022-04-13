@@ -23,10 +23,10 @@ import {
   checkIfLoggedIn,
   checkIfMetamaskIsInstalled,
   connectMetamask,
-  truncateAddress,
 } from "@/ethereum/Metamask";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import "@/util/Window";
+import { truncateString } from "@/util/TruncateString";
 
 const isMetamaskSupported = ref(false);
 const address = ref("");
@@ -62,6 +62,6 @@ async function connectWallet() {
   }
 }
 
-const computedAddress = computed(() => truncateAddress(address.value));
+const computedAddress = computed(() => truncateString(address.value, 5));
 </script>
 <style></style>

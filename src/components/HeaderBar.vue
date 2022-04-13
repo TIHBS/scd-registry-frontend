@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">👀</a>
-    <div id="navbarSupportedContent" class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link class="nav-link" to="/register">Register</router-link>

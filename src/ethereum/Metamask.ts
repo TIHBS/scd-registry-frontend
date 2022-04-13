@@ -17,11 +17,3 @@ export async function checkIfLoggedIn(): Promise<boolean> {
 export function checkIfMetamaskIsInstalled(): boolean {
   return typeof window.ethereum !== undefined;
 }
-
-export function truncateAddress(address: string) {
-  return (
-    address.substring(0, 5) +
-    "..." +
-    address.substring(address.length - 4, address.length)
-  );
-}

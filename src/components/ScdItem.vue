@@ -1,21 +1,22 @@
 <template>
   <div class="scd-item row">
-    <div class="col-3 left-column">
+    <div class="col-5 left-column">
       <div>Name: {{ name }}</div>
       <br />
-      <div>Author: {{ trim(author) }}</div>
+      <div>Author: {{ truncateString(author, 50) }}</div>
     </div>
-    <div class="col-9 right-column">
+    <div class="col-7 right-column">
       <div>
         Location: <a :href="url">{{ url }}</a>
       </div>
-      <div>Signature: {{ trim(signature) }}</div>
-      <div>Address: {{ trim(address) }}</div>
+      <div>Signature: {{ truncateString(signature, 60) }}</div>
+      <div>Address: {{ truncateString(address, 60) }}</div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { defineProps } from "vue";
+import { truncateString } from "@/util/TruncateString";
 
 defineProps<{
   id: string;
@@ -25,13 +26,6 @@ defineProps<{
   signature: string;
   address: string;
 }>();
-
-function trim(str: string): string {
-  if (str.length > 20) {
-    return str.substring(0, 17) + "...";
-  }
-  return str;
-}
 </script>
 <style>
 .left-column {
