@@ -53,10 +53,10 @@
 </template>
 <script setup lang="ts">
 import { StorageType } from "@/util/StorageType";
-import ipfs from "@/components/StorageWizard/IPFS.vue";
-import Swarm from "@/components/StorageWizard/Swarm.vue";
+import ipfs from "@/components/storage-wizard/IPFS.vue";
+import Swarm from "@/components/storage-wizard/Swarm.vue";
 // @ts-ignore
-import WebserverWizard from "@/components/StorageWizard/WebserverWizard.vue";
+import WebserverWizard from "@/components/storage-wizard/WebserverWizard.vue";
 import { ref } from "vue";
 // @ts-ignore
 import VueJsonPretty from "vue-json-pretty";

@@ -22,7 +22,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { webserverWizard } from "@/components/StorageWizard/WebserverWizard";
+import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
 import { Vue3JsonEditor } from "vue3-json-editor";
 
 const emit = defineEmits<{
