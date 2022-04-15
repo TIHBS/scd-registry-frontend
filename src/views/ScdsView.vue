@@ -11,6 +11,7 @@
       >
         <scd-item
           :id="uniqueId('item-')"
+          :scdId="item.id"
           :name="item.metadata.name"
           :author="item.metadata.author"
           :url="item.metadata.url"

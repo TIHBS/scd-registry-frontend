@@ -1,0 +1,72 @@
+<template>
+  <div class="detail-view">
+    <h1>This is the detail page {{ id }}</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm border overflow-auto right-column">
+          <VueJsonPretty :path="'res'" :data="scd" />
+        </div>
+        <div class="col-sm border overflow-auto left-column">
+          <VueJsonPretty :path="'res'" :data="metadata" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { ethereumConnector } from "@/ethereum/EthereumConnector";
+import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
+import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
+// @ts-ignore
+import VueJsonPretty from "vue-json-pretty";
+import { SCD } from "@/util/SCD";
+
+const router = useRouter();
+let id = router.currentRoute.value.params.id;
+
+let theId = "";
+if (id instanceof String) {
+  theId = id as string;
+} else {
+  theId = id[0];
+}
+
+const metadata = ref<Registry.SCDMetadataStruct>();
+const scd = ref<SCD | null>();
+
+onMounted(() => retrieveById());
+
+async function retrieveById() {
+  const retrieved = await ethereumConnector.retrieveById(theId);
+  if (!retrieved.metadata.isValid) {
+    throw new Error("No SCD with this id exists!");
+  }
+
+  metadata.value = {
+    name: retrieved.metadata.name,
+    author: retrieved.metadata.author,
+    internalAddress: retrieved.metadata.internalAddress,
+    url: retrieved.metadata.url,
+    signature: retrieved.metadata.signature,
+    version: retrieved.metadata.version,
+    functions: retrieved.metadata.functions,
+    events: retrieved.metadata.events,
+    isValid: retrieved.metadata.isValid,
+    blockChainType: retrieved.metadata.blockChainType,
+  };
+
+  scd.value = (await webserverWizard.fetchSCD(
+    metadata.value.url
+  )) as SCD | null;
+}
+</script>
+<style scoped>
+.left-column {
+  margin-right: 10px;
+}
+.right-column {
+  margin-left: 10px;
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="scd-item row">
+  <div class="scd-item row" @click="routeToDetails">
     <div class="col-5 left-column">
+      <div>Id: {{ scdId }}</div>
       <div>Name: {{ name }}</div>
-      <br />
       <div>Author: {{ truncateString(author, 50) }}</div>
     </div>
     <div class="col-7 right-column">
@@ -17,17 +17,29 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 import { truncateString } from "@/util/TruncateString";
+import { useRouter } from "vue-router";
 
-defineProps<{
+const props = defineProps<{
   id: string;
+  scdId: Number;
   name: string;
   author: string;
   url: string;
   signature: string;
   address: string;
 }>();
+
+const navId = props.scdId.toString();
+const router = useRouter();
+function routeToDetails() {
+  router.push({ path: `/scds/${navId}` });
+}
 </script>
-<style>
+<style scoped>
+.scd-item {
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
 .left-column {
   text-align: left;
 }

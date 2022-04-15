@@ -1,5 +1,5 @@
 import { Registry__factory } from "../../external/decentralised-scd-registry/src/types/factories/Registry__factory";
-import { ContractTransaction, Signer } from "ethers";
+import { BigNumberish, ContractTransaction, Signer } from "ethers";
 import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
 import scds from "./SCDs";
 import { SCD } from "@/util/SCD";
@@ -15,6 +15,12 @@ class EthereumConnector {
     query: string
   ): Promise<Registry.SCDMetadataWithIDStructOutput[]> {
     return this.createRegistryContract().query(query);
+  }
+
+  async retrieveById(
+    id: BigNumberish
+  ): Promise<Registry.SCDMetadataWithIDStructOutput> {
+    return await this.createRegistryContract().retrieveById(id);
   }
 
   async store(scd: Registry.SCDMetadataStruct): Promise<ContractTransaction> {

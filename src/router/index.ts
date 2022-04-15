@@ -4,6 +4,7 @@ import RegisterView from "@/views/RegisterView.vue";
 import SettingsView from "@/views/SettingsView.vue";
 import PowerGate from "@/views/PowerGate.vue";
 import IPFSView from "@/views/IPFSView.vue";
+import DetailView from "@/views/DetailView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/scds" },
@@ -11,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/scds",
     name: "scds",
     component: ScdsView,
+  },
+  {
+    path: "/scds/:id",
+    name: "detail",
+    component: DetailView,
   },
   {
     path: "/register",
