@@ -6,7 +6,7 @@ import { SCD } from "@/util/SCD";
 
 class EthereumConnector {
   private signer: Signer | undefined;
-  private static contractAddress = "0x222E34DA1926A9041ed5A87f71580D4D27f84fD3";
+  private static contractAddress = "0xC20d6eE98f994690E9ADee24A5C643ba69957F15";
   public setSigner(signer: Signer | undefined) {
     this.signer = signer;
   }
