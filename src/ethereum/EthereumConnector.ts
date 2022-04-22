@@ -2,11 +2,17 @@ import { Registry__factory } from "../../external/decentralised-scd-registry/src
 import { BigNumberish, ContractTransaction, Signer } from "ethers";
 import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
 import scds from "./SCDs";
-import { SCD } from "@/util/SCD";
+import { SCD } from "../../external/decentralised-scd-registry-common/SCD";
+import Deployment from "../../external/decentralised-scd-registry/deployments/ganache-cli/Registry.json";
 
 class EthereumConnector {
   private signer: Signer | undefined;
-  private static contractAddress = "0xC20d6eE98f994690E9ADee24A5C643ba69957F15";
+  private contractAddress: string;
+
+  constructor(contractAddress = Deployment.address) {
+    this.contractAddress = contractAddress;
+  }
+
   public setSigner(signer: Signer | undefined) {
     this.signer = signer;
   }
@@ -33,10 +39,7 @@ class EthereumConnector {
 
   private createRegistryContract() {
     if (this.signer) {
-      return Registry__factory.connect(
-        EthereumConnector.contractAddress,
-        this.signer
-      );
+      return Registry__factory.connect(this.contractAddress, this.signer);
     }
     throw new Error("You are not logged in!");
   }
@@ -45,18 +48,18 @@ class EthereumConnector {
     scd: SCD,
     url: string
   ): Promise<Registry.SCDMetadataStruct> {
-    const functionNames = scd.Functions.map((func) => func.Name);
-    const eventNames = scd.Events ? scd.Events.map((event) => event.Name) : [];
+    const functionNames = scd.functions.map((func) => func.name);
+    const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
     const signature = await this.signer!.signMessage(JSON.stringify(scd));
     const authorAddress = await this.signer!.getAddress();
     const metadata: Registry.SCDMetadataStruct = {
-      name: scd.Name,
+      name: scd.name,
       author: authorAddress,
-      version: scd.Version,
+      version: scd.version,
       signature: signature,
-      internalAddress: scd.InternalAddress,
+      internalAddress: scd.internal_address,
       url: url,
-      blockChainType: scd.BlockChainType,
+      blockChainType: scd.blockchain_type,
       functions: functionNames,
       events: eventNames,
       isValid: true,
