@@ -2,7 +2,12 @@ import { Registry__factory } from "../../external/decentralised-scd-registry/src
 import { BigNumberish, ContractTransaction, Signer } from "ethers";
 import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
 import scds from "./SCDs";
-import { SCD } from "../../external/decentralised-scd-registry-common/SCD";
+import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import {
+  Metadata,
+  toContractType,
+} from "../../external/decentralised-scd-registry-common/src/Conversion";
+
 import Deployment from "../../external/decentralised-scd-registry/deployments/ganache-cli/Registry.json";
 
 class EthereumConnector {
@@ -44,28 +49,31 @@ class EthereumConnector {
     throw new Error("You are not logged in!");
   }
 
-  public async scdToMetadata(
+  public async scdToContractMetadata(
     scd: SCD,
     url: string
   ): Promise<Registry.SCDMetadataStruct> {
+    return await toContractType(await this.scdToMetadata(scd, url));
+  }
+
+  private async scdToMetadata(scd: SCD, url: string): Promise<Metadata> {
     const functionNames = scd.functions.map((func) => func.name);
     const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
     const signature = await this.signer!.signMessage(JSON.stringify(scd));
     const authorAddress = await this.signer!.getAddress();
-    const metadata: Registry.SCDMetadataStruct = {
+
+    return {
       name: scd.name,
       author: authorAddress,
       version: scd.version,
       signature: signature,
-      internalAddress: scd.internal_address,
-      url: url,
-      blockChainType: scd.blockchain_type,
+      internal_address: scd.internal_address,
+      url: new URL("http://localhost:49160/" + url),
+      blockchain_type: scd.blockchain_type,
       functions: functionNames,
       events: eventNames,
-      isValid: true,
+      is_valid: true,
     };
-
-    return metadata;
   }
 }
 

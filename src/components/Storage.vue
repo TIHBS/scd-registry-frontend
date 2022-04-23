@@ -81,7 +81,7 @@ import { ref } from "vue";
 // @ts-ignore
 import VueJsonPretty from "vue-json-pretty";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
-import { SCD } from "@/util/SCD";
+import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
 
 const storageType = ref<StorageType>(StorageType.None);
@@ -105,7 +105,7 @@ async function onFetchedSCD(scd: SCD | null, url: string | null) {
 
 async function signAndTransform() {
   if (fetched.value) {
-    metadataJson.value = await ethereumConnector.scdToMetadata(
+    metadataJson.value = await ethereumConnector.scdToContractMetadata(
       scdJson.value!,
       currentUrl!
     );
