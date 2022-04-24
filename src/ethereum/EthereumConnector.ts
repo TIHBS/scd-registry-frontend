@@ -68,7 +68,7 @@ class EthereumConnector {
       version: scd.version,
       signature: signature,
       internal_address: scd.internal_address,
-      url: new URL("http://localhost:49160/" + url),
+      url: new URL(url),
       blockchain_type: scd.blockchain_type,
       functions: functionNames,
       events: eventNames,
