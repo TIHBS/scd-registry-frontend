@@ -14,6 +14,6 @@ module.exports = defineConfig({
     },
   },
   devServer: {
-    proxy: "http://localhost:49160/",
+    headers: { "Access-Control-Allow-Origin": "*" },
   },
 });
