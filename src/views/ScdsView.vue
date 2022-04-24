@@ -31,7 +31,7 @@ import uniqueId from "lodash.uniqueid";
 import ScdItem from "@/components/ScdItem.vue";
 // @ts-ignore
 import QueryForm from "@/components/QueryForm.vue";
-import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
+import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 
 const items = ref<Registry.SCDMetadataWithIDStructOutput[]>([]);
 

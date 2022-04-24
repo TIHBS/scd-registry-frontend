@@ -18,10 +18,9 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
-import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
-// @ts-ignore
+import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import VueJsonPretty from "vue-json-pretty";
-import { SCD } from "@/util/SCD";
+import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 
 const router = useRouter();
 let id = router.currentRoute.value.params.id;

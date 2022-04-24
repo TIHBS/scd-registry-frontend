@@ -1,52 +1,69 @@
-import { Registry__factory } from "../../external/decentralised-scd-registry/src/types/factories/Registry__factory";
-import { BigNumberish, ContractTransaction, Signer } from "ethers";
-import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
+import { Registry__factory } from "../../external/decentralised-scd-registry-common/src/wrappers/factories/Registry__factory";
+import { BigNumberish, ContractTransaction, ethers, Signer } from "ethers";
+import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import scds from "./SCDs";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 import {
   Metadata,
   toContractType,
 } from "../../external/decentralised-scd-registry-common/src/Conversion";
-
-import Deployment from "../../external/decentralised-scd-registry/deployments/ganache-cli/Registry.json";
+import { connectMetamask, getNetworkById } from "@/ethereum/Metamask";
+import { def } from "@vue/shared";
 
 class EthereumConnector {
-  private signer: Signer | undefined;
   private contractAddress: string;
+  private defaultNetwork: number;
 
-  constructor(contractAddress = Deployment.address) {
+  constructor(
+    defaultNetwork = 57771,
+    contractAddress = "0x222E34DA1926A9041ed5A87f71580D4D27f84fD3" /* This address seems to be the one that is used most of the time when the contract is deployed.*/
+  ) {
+    this.defaultNetwork = defaultNetwork;
     this.contractAddress = contractAddress;
   }
 
-  public setSigner(signer: Signer | undefined) {
-    this.signer = signer;
+  async connectWallet() {
+    return await connectMetamask();
   }
 
   async query(
     query: string
   ): Promise<Registry.SCDMetadataWithIDStructOutput[]> {
-    return this.createRegistryContract().query(query);
+    return (await this.createRegistryContractWithProvider()).query(query);
   }
 
   async retrieveById(
     id: BigNumberish
   ): Promise<Registry.SCDMetadataWithIDStructOutput> {
-    return await this.createRegistryContract().retrieveById(id);
+    return await (
+      await this.createRegistryContractWithProvider()
+    ).retrieveById(id);
   }
 
   async store(scd: Registry.SCDMetadataStruct): Promise<ContractTransaction> {
-    return await this.createRegistryContract().store(scd);
+    return await (await this.createRegistryContractWithSigner()).store(scd);
   }
 
   async storeMock(): Promise<ContractTransaction> {
-    return await this.createRegistryContract().storeMultiple(scds);
+    return await (
+      await this.createRegistryContractWithSigner()
+    ).storeMultiple(scds);
   }
 
-  private createRegistryContract() {
-    if (this.signer) {
-      return Registry__factory.connect(this.contractAddress, this.signer);
-    }
-    throw new Error("You are not logged in!");
+  private async createRegistryContractWithSigner() {
+    return Registry__factory.connect(
+      this.contractAddress,
+      await this.connectWallet()
+    );
+  }
+
+  private async createRegistryContractWithProvider() {
+    return Registry__factory.connect(
+      this.contractAddress,
+      await ethers.getDefaultProvider(
+        getNetworkById(Number(this.defaultNetwork))
+      )
+    );
   }
 
   public async scdToContractMetadata(
@@ -59,8 +76,10 @@ class EthereumConnector {
   private async scdToMetadata(scd: SCD, url: string): Promise<Metadata> {
     const functionNames = scd.functions.map((func) => func.name);
     const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
-    const signature = await this.signer!.signMessage(JSON.stringify(scd));
-    const authorAddress = await this.signer!.getAddress();
+    const signature = await (
+      await this.connectWallet()
+    ).signMessage(JSON.stringify(scd));
+    const authorAddress = await (await this.connectWallet()).getAddress();
 
     return {
       name: scd.name,

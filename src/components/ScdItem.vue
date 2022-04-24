@@ -9,13 +9,12 @@
       <div>
         Location: <a :href="url">{{ url }}</a>
       </div>
-      <div>Signature: {{ truncateString(signature, 60) }}</div>
-      <div>Address: {{ truncateString(address, 60) }}</div>
+      <div>Signature: {{ truncateString(signature, 40) }}</div>
+      <div>Address: {{ truncateString(address, 40) }}</div>
     </div>
-    <div class="col-1 right-column">
-      <br />
+    <div class="col-1 right-column detail-link">
       <router-link :to="{ path: `/scds/${navId}` }">
-        <i class="detail-link bi bi-list-ul"></i>
+        <i class="bi bi-list-ul"></i>
       </router-link>
     </div>
   </div>
@@ -23,7 +22,6 @@
 <script setup lang="ts">
 import { defineProps, ref } from "vue";
 import { truncateString } from "@/util/TruncateString";
-import { useRouter } from "vue-router";
 
 const props = defineProps<{
   id: string;
@@ -48,7 +46,10 @@ const navId = props.scdId.toString();
   text-align: right;
 }
 .detail-link {
-  font-size: 325%;
+  padding-top: 10px;
+}
+.detail-link i {
+  font-size: 250%;
   cursor: pointer;
 }
 </style>

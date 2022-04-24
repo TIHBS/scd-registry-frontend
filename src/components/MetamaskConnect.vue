@@ -10,7 +10,7 @@
       v-if="isMetamaskSupported"
       class="btn btn-outline-success my-2 my-sm-0"
       type="button"
-      @click="connectWallet"
+      @click="displayAddress"
     >
       Connect Metamask
     </button>
@@ -37,24 +37,22 @@ onMounted(async () => {
   isMetamaskSupported.value = checkIfMetamaskIsInstalled();
   isLoggedIn.value = await checkIfLoggedIn();
   if (isLoggedIn.value) {
-    connectWallet();
+    displayAddress();
   }
-  window.ethereum.on("accountsChanged", (accounts: string[]) => {
-    if (accounts.length == 0) {
-      isLoggedIn.value = false;
-      ethereumConnector.setSigner(undefined);
-    }
-  });
+  window.ethereum.on(
+    "accountsChanged",
+    (accounts: string[]) => (isLoggedIn.value = accounts.length != 0)
+  );
 });
 
-async function connectWallet() {
+async function displayAddress() {
   try {
     waiting.value = true;
-    const signer = await connectMetamask();
+    const signer = await ethereumConnector.connectWallet();
     const signerAddress = await signer.getAddress();
+
     isLoggedIn.value = signerAddress != "";
     if (isLoggedIn.value) {
-      ethereumConnector.setSigner(signer);
       address.value = signerAddress;
     }
   } finally {
