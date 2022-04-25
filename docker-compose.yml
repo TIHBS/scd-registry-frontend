@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  decentralised-scd-registry-deployer:
+    container_name: decentralised-scd-registry-deployer
+    build:
+      context: .
+      dockerfile: docker/decentralised-scd-registry-deployer/Dockerfile
+    environment:
+      - IPFS_GATEWAY=http://ipfs-frontend:5001
+    restart: "no"
+    depends_on:
+      - ipfs-frontend
+
+  ipfs-frontend:
+    container_name: ipfs-frontend
+    image: ipfs/go-ipfs:v0.12.2
+    restart: unless-stopped
+    volumes:
+      - ipfsdata-frontend:/ipfsdata
+    ports:
+      - "4001:4001"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8081:8081"
+      - "127.0.0.1:5001:5001"
+
+volumes:
+  ipfsdata-frontend:
