@@ -94,6 +94,10 @@ class EthereumConnector {
       is_valid: true,
     };
   }
+
+  public verifySignature(message: string, signature: string): string {
+    return ethers.utils.verifyMessage(message, signature);
+  }
 }
 
 const ethereumConnector = new EthereumConnector();
