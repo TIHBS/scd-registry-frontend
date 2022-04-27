@@ -8,35 +8,77 @@ import {
   toContractType,
 } from "../../external/decentralised-scd-registry-common/src/Conversion";
 import { connectMetamask, getNetworkById } from "@/ethereum/Metamask";
-import { def } from "@vue/shared";
+import { Provider } from "@ethersproject/abstract-provider/lib/index";
 
 class EthereumConnector {
   private contractAddress: string;
-  private defaultNetwork: number;
+  private signer: Signer | undefined;
+  private provider: Provider | undefined;
 
   constructor(
-    defaultNetwork = 57771,
     contractAddress = "0x222E34DA1926A9041ed5A87f71580D4D27f84fD3" /* This address seems to be the one that is used most of the time when the contract is deployed.*/
   ) {
-    this.defaultNetwork = defaultNetwork;
     this.contractAddress = contractAddress;
   }
 
-  async connectWallet() {
-    return await connectMetamask();
+  public isConnected(): boolean {
+    return this.signer != undefined;
+  }
+
+  public setSigner(signer: Signer | undefined) {
+    this.signer = signer;
+  }
+
+  public async getSigner(): Promise<Signer> {
+    if (!this.signer) {
+      this.signer = await connectMetamask();
+    }
+    return this.signer;
+  }
+
+  public async getSignerOrProvider(): Promise<Signer | Provider> {
+    if (this.signer) {
+      return this.signer;
+    }
+    if (!this.provider) {
+      if (localStorage.getItem("networkid")) {
+        this.provider = await ethers.getDefaultProvider(
+          localStorage.getItem("networkid")!
+        );
+      } else {
+        throw new Error("You haven't entered a valid network ID");
+      }
+    }
+    return this.provider;
+  }
+
+  private async createRegistryContractWithSigner(): Promise<Registry> {
+    return Registry__factory.connect(
+      this.contractAddress,
+      await this.getSigner()
+    );
+  }
+
+  private async createRegistryContractWithSignerOrProvider(): Promise<Registry> {
+    return Registry__factory.connect(
+      this.contractAddress,
+      await this.getSignerOrProvider()
+    );
   }
 
   async query(
     query: string
   ): Promise<Registry.SCDMetadataWithIDStructOutput[]> {
-    return (await this.createRegistryContractWithProvider()).query(query);
+    return (await this.createRegistryContractWithSignerOrProvider()).query(
+      query
+    );
   }
 
   async retrieveById(
     id: BigNumberish
   ): Promise<Registry.SCDMetadataWithIDStructOutput> {
     return await (
-      await this.createRegistryContractWithProvider()
+      await this.createRegistryContractWithSignerOrProvider()
     ).retrieveById(id);
   }
 
@@ -50,22 +92,6 @@ class EthereumConnector {
     ).storeMultiple(scds);
   }
 
-  private async createRegistryContractWithSigner() {
-    return Registry__factory.connect(
-      this.contractAddress,
-      await this.connectWallet()
-    );
-  }
-
-  private async createRegistryContractWithProvider() {
-    return Registry__factory.connect(
-      this.contractAddress,
-      await ethers.getDefaultProvider(
-        getNetworkById(Number(this.defaultNetwork))
-      )
-    );
-  }
-
   public async scdToContractMetadata(
     scd: SCD,
     url: string
@@ -77,9 +103,9 @@ class EthereumConnector {
     const functionNames = scd.functions.map((func) => func.name);
     const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
     const signature = await (
-      await this.connectWallet()
+      await this.getSigner()
     ).signMessage(JSON.stringify(scd));
-    const authorAddress = await (await this.connectWallet()).getAddress();
+    const authorAddress = await (await this.getSigner()).getAddress();
 
     return {
       name: scd.name,

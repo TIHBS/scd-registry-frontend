@@ -22,7 +22,6 @@ import { computed, onMounted, ref } from "vue";
 import {
   checkIfLoggedIn,
   checkIfMetamaskIsInstalled,
-  connectMetamask,
 } from "@/ethereum/Metamask";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import "@/util/Window";
@@ -39,17 +38,20 @@ onMounted(async () => {
   if (isLoggedIn.value) {
     displayAddress();
   }
-  window.ethereum.on(
-    "accountsChanged",
-    (accounts: string[]) => (isLoggedIn.value = accounts.length != 0)
-  );
+  window.ethereum.on("accountsChanged", (accounts: string[]) => {
+    isLoggedIn.value = accounts.length != 0;
+    if (!isLoggedIn.value) {
+      ethereumConnector.setSigner(undefined);
+    }
+  });
 });
 
 async function displayAddress() {
   try {
     waiting.value = true;
-    const signer = await ethereumConnector.connectWallet();
-    const signerAddress = await signer.getAddress();
+    const signerAddress = await (
+      await ethereumConnector.getSigner()
+    ).getAddress();
 
     isLoggedIn.value = signerAddress != "";
     if (isLoggedIn.value) {

@@ -54,15 +54,11 @@
               >
                 <i class="bi bi-arrow-right">Sign and transform</i></button
               ><br />
-              <button
-                :v-if="signed"
-                type="submit"
-                class="btn btn-outline-primary"
-              >
+              <button type="submit" class="btn btn-outline-primary">
                 Store
               </button>
             </div>
-            <div :v-if="signed" class="col-sm border overflow-auto">
+            <div class="col-sm border overflow-auto">
               <VueJsonPretty :path="'res'" :data="metadataJson" />
             </div>
           </div>
@@ -82,23 +78,19 @@ import { ref } from "vue";
 import VueJsonPretty from "vue-json-pretty";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
-import { Registry } from "external/decentralised-scd-registry/src/types/Registry";
+import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 
 const storageType = ref<StorageType>(StorageType.None);
 const scdJson = ref<SCD | null>();
 const metadataJson = ref<Registry.SCDMetadataStruct>();
 
 const fetched = ref(false);
-const signed = ref(false);
 
 let currentUrl: string | null = null;
 
-function fetchedSomething() {
-  return fetched.value;
-}
-
 async function onFetchedSCD(scd: SCD | null, url: string | null) {
   scdJson.value = scd;
+  metadataJson.value = undefined;
   currentUrl = url;
   fetched.value = scd != null;
 }
@@ -113,8 +105,11 @@ async function signAndTransform() {
 }
 
 async function onSubmit() {
+  if (!metadataJson.value) {
+    throw new Error("You have sign and transform the SCD to store it.");
+  }
   const transaction = await ethereumConnector.store(metadataJson.value!);
-  await transaction.wait();
+  const contractTransaction = await transaction.wait();
 }
 </script>
 <style>

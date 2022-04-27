@@ -1,5 +1,4 @@
 <template>
-  <h1>This is the SCD list page</h1>
   <query-form @query-results="onQueryResults"></query-form><br />
   <h2>{{ computedNumberOfResults }}</h2>
   <ul class="scd-item-list list-group-flush container">
