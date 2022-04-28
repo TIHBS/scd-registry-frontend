@@ -3,7 +3,9 @@
 
   <div class="card">
     <div class="card-header">
-      <div class="num-results">{{ computedNumberOfResults }}</div>
+      <div class="num-results">
+        <b>{{ computedNumberOfResults }}</b>
+      </div>
     </div>
     <ul class="list-group list-group-flush">
       <div v-if="items.length > 0">

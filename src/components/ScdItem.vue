@@ -2,16 +2,16 @@
   <div class="scd-item">
     <div class="row">
       <div class="col-5 left-column">
-        <div>Id: {{ scdId }}</div>
-        <div>Name: {{ name }}</div>
-        <div>Author: {{ truncateString(author, 50) }}</div>
+        <div><b>Id:</b> {{ scdId }}</div>
+        <div><b>Name:</b> {{ name }}</div>
+        <div><b>Author:</b> {{ truncateString(author, 50) }}</div>
       </div>
       <div class="col-6 right-column">
         <div>
-          Location: <a :href="url">{{ url }}</a>
+          <b> Location:</b> <a :href="url">{{ url }}</a>
         </div>
-        <div>Signature: {{ truncateString(signature, 40) }}</div>
-        <div>Address: {{ truncateString(address, 40) }}</div>
+        <div><b>Signature:</b> {{ truncateString(signature, 20) }}</div>
+        <div><b>Address:</b> {{ truncateString(address, 20) }}</div>
       </div>
       <div class="col-1 right-column detail-link">
         <router-link :to="{ path: `/scds/${navId}` }">
