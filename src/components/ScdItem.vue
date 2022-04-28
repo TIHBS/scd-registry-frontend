@@ -1,21 +1,23 @@
 <template>
-  <div class="scd-item row">
-    <div class="col-5 left-column">
-      <div>Id: {{ scdId }}</div>
-      <div>Name: {{ name }}</div>
-      <div>Author: {{ truncateString(author, 50) }}</div>
-    </div>
-    <div class="col-6 right-column">
-      <div>
-        Location: <a :href="url">{{ url }}</a>
+  <div class="scd-item">
+    <div class="row">
+      <div class="col-5 left-column">
+        <div>Id: {{ scdId }}</div>
+        <div>Name: {{ name }}</div>
+        <div>Author: {{ truncateString(author, 50) }}</div>
       </div>
-      <div>Signature: {{ truncateString(signature, 40) }}</div>
-      <div>Address: {{ truncateString(address, 40) }}</div>
-    </div>
-    <div class="col-1 right-column detail-link">
-      <router-link :to="{ path: `/scds/${navId}` }">
-        <i class="bi bi-list-ul"></i>
-      </router-link>
+      <div class="col-6 right-column">
+        <div>
+          Location: <a :href="url">{{ url }}</a>
+        </div>
+        <div>Signature: {{ truncateString(signature, 40) }}</div>
+        <div>Address: {{ truncateString(address, 40) }}</div>
+      </div>
+      <div class="col-1 right-column detail-link">
+        <router-link :to="{ path: `/scds/${navId}` }">
+          <i class="bi bi-list-ul"></i>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

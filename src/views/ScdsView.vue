@@ -1,26 +1,30 @@
 <template>
   <query-form @query-results="onQueryResults"></query-form><br />
-  <h2>{{ computedNumberOfResults }}</h2>
-  <ul class="scd-item-list list-group-flush container">
-    <div v-if="items.length > 0">
-      <li
-        v-for="item in items"
-        :key="item.id"
-        class="row list-group-item justify-content-between align-items-start"
-      >
-        <scd-item
-          :id="uniqueId('item-')"
-          :scdId="item.id"
-          :name="item.metadata.name"
-          :author="item.metadata.author"
-          :url="item.metadata.url"
-          :signature="item.metadata.signature"
-          :address="item.metadata.internalAddress"
-        ></scd-item>
-      </li>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="num-results">{{ computedNumberOfResults }}</div>
     </div>
-    <span v-else>No results found </span>
-  </ul>
+    <ul class="list-group list-group-flush">
+      <div v-if="items.length > 0">
+        <li
+          v-for="item in items"
+          :key="item.id"
+          class="list-group-item justify-content-between align-items-start"
+        >
+          <scd-item
+            :id="uniqueId('item-')"
+            :scdId="item.id"
+            :name="item.metadata.name"
+            :author="item.metadata.author"
+            :url="item.metadata.url"
+            :signature="item.metadata.signature"
+            :address="item.metadata.internalAddress"
+          ></scd-item>
+        </li>
+      </div>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -34,16 +38,19 @@ import { Registry } from "../../external/decentralised-scd-registry-common/src/w
 
 const items = ref<Registry.SCDMetadataWithIDStructOutput[]>([]);
 
-const computedNumberOfResults = computed(
-  () => `${items.value.length} SCDs found`
-);
+const computedNumberOfResults = computed(() => {
+  if (items.value.length == 0) {
+    return "No results found";
+  }
+  return `${items.value.length} results`;
+});
 
 function onQueryResults(results: Registry.SCDMetadataWithIDStructOutput[]) {
   items.value = results;
 }
 </script>
 <style>
-.scd-item-list {
-  margin-top: 10px;
+.num-results {
+  text-align: left;
 }
 </style>
