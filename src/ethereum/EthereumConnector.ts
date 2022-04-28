@@ -7,19 +7,12 @@ import {
   Metadata,
   toContractType,
 } from "../../external/decentralised-scd-registry-common/src/Conversion";
-import { connectMetamask, getNetworkById } from "@/ethereum/Metamask";
+import { connectMetamask } from "@/ethereum/Metamask";
 import { Provider } from "@ethersproject/abstract-provider/lib/index";
 
 class EthereumConnector {
-  private contractAddress: string;
   private signer: Signer | undefined;
   private provider: Provider | undefined;
-
-  constructor(
-    contractAddress = "0x222E34DA1926A9041ed5A87f71580D4D27f84fD3" /* This address seems to be the one that is used most of the time when the contract is deployed.*/
-  ) {
-    this.contractAddress = contractAddress;
-  }
 
   public isConnected(): boolean {
     return this.signer != undefined;
@@ -52,16 +45,23 @@ class EthereumConnector {
     return this.provider;
   }
 
+  private getContractAddress(): string {
+    if (!localStorage.getItem("contract-address")) {
+      throw new Error("You have to specify a contract address!");
+    }
+    return localStorage.getItem("contract-address")!;
+  }
+
   private async createRegistryContractWithSigner(): Promise<Registry> {
     return Registry__factory.connect(
-      this.contractAddress,
+      this.getContractAddress(),
       await this.getSigner()
     );
   }
 
   private async createRegistryContractWithSignerOrProvider(): Promise<Registry> {
     return Registry__factory.connect(
-      this.contractAddress,
+      this.getContractAddress(),
       await this.getSignerOrProvider()
     );
   }
