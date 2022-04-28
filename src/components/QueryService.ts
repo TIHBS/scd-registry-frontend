@@ -1,5 +1,5 @@
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
-import { SCDWithID } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { BigNumberish } from "ethers";
 import { Registry } from "external/decentralised-scd-registry-common/src/wrappers/Registry";
 import { useToast } from "vue-toastification";
 
@@ -47,7 +47,7 @@ class QueryService {
       throw new Error("You have to specify an External search provider URL!");
     }
 
-    url = `${url}?query=${query}`;
+    url = `${url}?onlyId=true&query=${query}`;
     console.log(url);
 
     const result = await fetch(url, {
@@ -61,7 +61,7 @@ class QueryService {
       return [];
     }
 
-    let parsedResult: SCDWithID[] = [];
+    let parsedResult: BigNumberish[] = [];
     try {
       parsedResult = await result.json();
     } catch (error) {
@@ -69,9 +69,7 @@ class QueryService {
     }
 
     return await Promise.all(
-      parsedResult.map(
-        async (scd) => await ethereumConnector.retrieveById(scd.id)
-      )
+      parsedResult.map(async (id) => await ethereumConnector.retrieveById(id))
     );
   }
 }
