@@ -20,7 +20,6 @@
         </li>
       </ul>
     </div>
-    <store-mock-data></store-mock-data>
     <metamask-connect></metamask-connect>
   </nav>
 </template>

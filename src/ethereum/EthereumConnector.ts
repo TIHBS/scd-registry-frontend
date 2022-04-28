@@ -86,12 +86,6 @@ class EthereumConnector {
     return await (await this.createRegistryContractWithSigner()).store(scd);
   }
 
-  async storeMock(): Promise<ContractTransaction> {
-    return await (
-      await this.createRegistryContractWithSigner()
-    ).storeMultiple(scds);
-  }
-
   public async scdToContractMetadata(
     scd: SCD,
     url: string
