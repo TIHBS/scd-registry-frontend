@@ -8,7 +8,7 @@
   <div v-else>
     <button
       v-if="isMetamaskSupported"
-      class="btn btn-outline-success my-2 my-sm-0"
+      class="btn btn-outline-success"
       type="button"
       @click="displayAddress"
     >
