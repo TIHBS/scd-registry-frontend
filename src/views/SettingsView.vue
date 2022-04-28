@@ -1,46 +1,45 @@
 <template>
   <div class="settings">
-    <h1>This is a settings page</h1>
+    <form class="settings-form" @submit.prevent="onSubmit">
+      <div class="settings-field">
+        <label for="networkid">Network ID</label>
+        <input
+          id="networkid"
+          v-model.lazy.trim="networkid"
+          type="text"
+          name="networkid"
+          autocomplete="off"
+          class="form-control"
+        />
+        <small id="emailHelp" class="form-text text-muted"
+          >If you connect to Metamask this setting will be ignored.</small
+        >
+      </div>
+      <div class="settings-field">
+        <label for="contract-address">Contract address</label>
+        <input
+          id="contract-address"
+          v-model.lazy.trim="contractAddress"
+          type="text"
+          name="contract-address"
+          autocomplete="off"
+          class="form-control"
+        />
+      </div>
+      <div class="settings-field">
+        <label for="external-search-provider">External search provider</label>
+        <input
+          id="external-search-provider"
+          v-model.lazy.trim="externalSearchProvider"
+          type="text"
+          name="external-search-provider"
+          autocomplete="off"
+          class="form-control"
+        />
+      </div>
+      <button type="submit" class="btn btn-outline-primary">Save</button>
+    </form>
   </div>
-  <form class="settings-form" @submit.prevent="onSubmit">
-    <div class="settings-field">
-      <label for="networkid">Network ID</label>
-      <input
-        id="networkid"
-        v-model.lazy.trim="networkid"
-        type="text"
-        name="networkid"
-        autocomplete="off"
-        class="form-control"
-      />
-      <small id="emailHelp" class="form-text text-muted"
-        >If you connect to Metamask this setting will be ignored.</small
-      >
-    </div>
-    <div class="settings-field">
-      <label for="contract-address">Contract address</label>
-      <input
-        id="contract-address"
-        v-model.lazy.trim="contractAddress"
-        type="text"
-        name="contract-address"
-        autocomplete="off"
-        class="form-control"
-      />
-    </div>
-    <div class="settings-field">
-      <label for="external-search-provider">External search provider</label>
-      <input
-        id="external-search-provider"
-        v-model.lazy.trim="externalSearchProvider"
-        type="text"
-        name="external-search-provider"
-        autocomplete="off"
-        class="form-control"
-      />
-    </div>
-    <button type="submit" class="btn btn-outline-primary">Save</button>
-  </form>
 </template>
 
 <script setup lang="ts">
