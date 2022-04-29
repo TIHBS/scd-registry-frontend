@@ -2,6 +2,29 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">👀</a>
+      <div class="collapse navbar-collapse" id="navbar-content">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-list">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/register">Register</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/scds">SCDs</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/settings">Settings</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/power-gate"
+              >Powergate</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/ipfs">IPFS</router-link>
+          </li>
+        </ul>
+      </div>
+      <metamask-connect></metamask-connect>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -13,34 +36,6 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbar-content">
-        <div class="d-flex">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-list">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/register"
-                >Register</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/scds">SCDs</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/settings"
-                >Settings</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/power-gate"
-                >Powergate</router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/ipfs">IPFS</router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <metamask-connect class="justify-content-end"></metamask-connect>
     </div>
   </nav>
 </template>
