@@ -1,23 +1,25 @@
 <template>
-  <h2>This is the Webserver wizard</h2>
-  <form @submit.prevent="onSubmit">
-    <div class="query-text-filed input-group">
-      <input
-        id="url-input"
-        v-model.lazy.trim="url"
-        type="text"
-        name="url"
-        autocomplete="off"
-        class="form-control"
-      />
-      <button
-        type="submit"
-        class="btn btn-outline-primary input-group-prepend search-button"
-      >
-        Fetch
-      </button>
-    </div>
-  </form>
+  <div class="webserver-wizard">
+    <label>This is the Webserver wizard</label>
+    <form @submit.prevent="onSubmit">
+      <div class="query-text-filed input-group">
+        <input
+          id="url-input"
+          v-model.lazy.trim="url"
+          type="text"
+          name="url"
+          autocomplete="off"
+          class="form-control"
+        />
+        <button
+          type="submit"
+          class="btn btn-outline-primary input-group-prepend search-button"
+        >
+          Fetch
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
@@ -35,4 +37,12 @@ async function onSubmit() {
   emit("fetchedSCD", result, result ? url.value : null);
 }
 </script>
-<style></style>
+<style scoped>
+.webserver-wizard {
+  text-align: left;
+}
+
+.webserver-wizard label {
+  font-weight: bold;
+}
+</style>
