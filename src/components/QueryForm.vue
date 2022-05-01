@@ -1,7 +1,7 @@
 <template>
   <div class="query-form">
     <form @submit.prevent="onSubmit">
-      <div class="query-text-filed input-group">
+      <div class="query-text-field input-group">
         <input
           id="query-input"
           v-model.lazy.trim="query"
@@ -83,7 +83,7 @@ async function onSubmit() {
 </script>
 
 <style scoped>
-.query-form .query-text-filed {
+.query-form .query-text-field {
   margin-bottom: 10px;
 }
 

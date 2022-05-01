@@ -38,7 +38,7 @@
         @fetchedSCD="onFetchedSCD"
       ></WebserverWizard>
       <ipfs v-if="storageType == StorageType.IPFS"></ipfs>
-      <swarm v-if="storageType == StorageType.Swarm"></swarm>
+      <swarm-wizard v-if="storageType == StorageType.Swarm"></swarm-wizard>
       <br />
       <form @submit.prevent="onSubmit">
         <div v-if="fetched" class="container">
@@ -70,7 +70,8 @@
 <script setup lang="ts">
 import { StorageType } from "@/util/StorageType";
 import ipfs from "@/components/storage-wizard/IPFS.vue";
-import Swarm from "@/components/storage-wizard/Swarm.vue";
+// @ts-ignore
+import SwarmWizard from "@/components/storage-wizard/SwarmWizard.vue";
 // @ts-ignore
 import WebserverWizard from "@/components/storage-wizard/WebserverWizard.vue";
 import { ref } from "vue";

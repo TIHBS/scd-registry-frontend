@@ -37,6 +37,28 @@
           class="form-control"
         />
       </div>
+      <div class="settings-field">
+        <label for="swarm-debug">Swarm debug</label>
+        <input
+          id="swarm-debug"
+          v-model.lazy.trim="swarmDebug"
+          type="text"
+          name="swarm-debug"
+          autocomplete="off"
+          class="form-control"
+        />
+      </div>
+      <div class="settings-field">
+        <label for="swarm-api">Swarm api</label>
+        <input
+          id="swarm-api"
+          v-model.lazy.trim="swarmApi"
+          type="text"
+          name="swarm-api"
+          autocomplete="off"
+          class="form-control"
+        />
+      </div>
       <button type="submit" class="btn btn-outline-primary">Save</button>
     </form>
   </div>
@@ -49,6 +71,9 @@ import { useToast } from "vue-toastification";
 
 const networkid = ref("");
 const contractAddress = ref("");
+const swarmDebug = ref("");
+const swarmApi = ref("");
+
 const correctNetworkid = computed(async () => {
   try {
     console.log(new URL(externalSearchProvider.value).toString());
@@ -87,6 +112,14 @@ onMounted(() => {
       "externalSearchProvider"
     )!;
   }
+
+  if (localStorage.getItem("swarm-debug")) {
+    swarmDebug.value = localStorage.getItem("swarm-debug")!;
+  }
+
+  if (localStorage.getItem("swarm-api")) {
+    swarmApi.value = localStorage.getItem("swarm-api")!;
+  }
 });
 
 async function onSubmit() {
@@ -110,6 +143,9 @@ async function onSubmit() {
       "externalSearchProvider",
       externalSearchProvider.value
     );
+    localStorage.setItem("swarm-debug", swarmDebug.value);
+    localStorage.setItem("swarm-api", swarmApi.value);
+
     useToast().success("Saved settings");
   }
 }
