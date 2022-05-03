@@ -23,6 +23,13 @@ export function createBeeDebugApi(): BeeDebug {
   return new BeeDebug(url);
 }
 
+export async function getPostageBatch(
+  beeDebug: BeeDebug,
+  batchId: BatchId
+): Promise<PostageBatch> {
+  return await beeDebug.getPostageBatch(batchId);
+}
+
 export async function getAllPostageBatch(
   beeDebug: BeeDebug
 ): Promise<PostageBatch[]> {

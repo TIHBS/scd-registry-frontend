@@ -37,25 +37,30 @@
   </div>
 </template>
 <script setup lang="ts">
-import { getAllPostageBatch } from "@/util/Swarm";
-import { BeeDebug, PostageBatch } from "@ethersphere/bee-js";
+import { PostageBatch } from "@ethersphere/bee-js";
 import { onMounted } from "@vue/runtime-core";
 import { computed, ref } from "vue";
+import { swarmWizard } from "../storage-wizard/SwarmWizard";
+// @ts-ignore
 import PostageBatchItem from "./PostageBatch.vue";
-import uniqueId from "lodash.uniqueid";
 
 const postageBatches = ref<PostageBatch[]>([]);
 
 const computedNumberOfResults = computed(() => {
   if (postageBatches.value.length == 0) {
-    return "No Postage batches found";
+    return "No available Postage batches found";
   }
-  return `${postageBatches.value.length} batches`;
+  if (postageBatches.value.length == 1) {
+    return "1 available Postage batch found";
+  }
+  return `${postageBatches.value.length} available Postage batches found`;
 });
 
 onMounted(async () => {
-  const beeDebug = new BeeDebug(localStorage.getItem("swarm-debug")!);
-  postageBatches.value = await getAllPostageBatch(beeDebug);
+  do {
+    postageBatches.value = await swarmWizard.getAllPostageBatch();
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+  } while (true);
 });
 </script>
 <style scoped>

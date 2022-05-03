@@ -5,7 +5,12 @@ import {
   uploadFile,
   uploadString,
 } from "@/util/Swarm";
-import { BatchId, NumberString, UploadResult } from "@ethersphere/bee-js";
+import {
+  BatchId,
+  NumberString,
+  PostageBatch,
+  UploadResult,
+} from "@ethersphere/bee-js";
 
 interface BatchID {
   batchID: string;
@@ -26,6 +31,16 @@ class SwarmWizard {
       depth
     );
     return batchId;
+  }
+
+  public async getPostageBatch(batchId: BatchId): Promise<PostageBatch> {
+    const beeDebug = createBeeDebugApi();
+    return await beeDebug.getPostageBatch(batchId);
+  }
+
+  public async getAllPostageBatch(): Promise<PostageBatch[]> {
+    const beeDebug = createBeeDebugApi();
+    return await beeDebug.getAllPostageBatch();
   }
 
   public async upload(data: string | File): Promise<UploadResult> {

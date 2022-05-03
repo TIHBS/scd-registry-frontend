@@ -2,24 +2,36 @@
   <div class="postage-batch">
     <div class="row">
       <div class="col-sm left-column">
-        <div><b>Batch ID:</b> {{ postageBatch.batchID }}</div>
-        <div><b>Label:</b> {{ postageBatch.label }}</div>
-        <div><b>Usable:</b> {{ postageBatch.usable }}</div>
+        <div><b>Batch ID:</b> {{ thePostageBatch.batchID }}</div>
+        <div><b>Label:</b> {{ thePostageBatch.label }}</div>
+        <div><b>Usable:</b> {{ thePostageBatch.usable }}</div>
       </div>
       <div class="col-sm right-column">
-        <div><b>TTL:</b> {{ postageBatch.batchTTL }}</div>
-        <div><b>Amount:</b> {{ postageBatch.amount }}</div>
-        <div><b>Depth:</b> {{ postageBatch.depth }}</div>
+        <div><b>TTL:</b> {{ thePostageBatch.batchTTL }}</div>
+        <div><b>Amount:</b> {{ thePostageBatch.amount }}</div>
+        <div><b>Depth:</b> {{ thePostageBatch.depth }}</div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { PostageBatch } from "@ethersphere/bee-js";
+import { onMounted, ref } from "vue";
+import { swarmWizard } from "../storage-wizard/SwarmWizard";
 
 const props = defineProps<{
   postageBatch: PostageBatch;
 }>();
+
+const thePostageBatch = ref(props.postageBatch);
+onMounted(async () => {
+  while (!thePostageBatch.value.usable) {
+    thePostageBatch.value = await swarmWizard.getPostageBatch(
+      thePostageBatch.value.batchID
+    );
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+  }
+});
 </script>
 <style scoped>
 .postage-batch {

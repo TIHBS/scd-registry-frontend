@@ -9,6 +9,7 @@ import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "vue-toastification/dist/index.css";
 import "vue-json-pretty/lib/styles.css";
+import "../public/style.css";
 
 const app = createApp(App);
 app.use(BootstrapVue3);

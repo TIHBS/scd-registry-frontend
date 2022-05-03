@@ -46,12 +46,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { BatchId, PostageBatch } from "@ethersphere/bee-js";
+import { PostageBatch } from "@ethersphere/bee-js";
 import { ref } from "vue";
 import { swarmWizard } from "../storage-wizard/SwarmWizard";
 
 const emit = defineEmits<{
-  (e: "createdPostageBatch", results: BatchId): void;
+  (e: "createdPostageBatch", results: PostageBatch): void;
 }>();
 
 const amount = ref("1000000");
@@ -65,7 +65,8 @@ async function onSubmit() {
       amount.value,
       depth.value
     );
-    emit("createdPostageBatch", batchId);
+    const batch = await swarmWizard.getPostageBatch(batchId);
+    emit("createdPostageBatch", batch);
   } finally {
     waiting.value = false;
   }
