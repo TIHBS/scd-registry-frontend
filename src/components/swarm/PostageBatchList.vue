@@ -26,6 +26,7 @@
             <PostageBatchItem
               v-for="item in postageBatches"
               @selectedPostageBatch="onSelectedPostageBatch"
+              :selected="item.batchID == selectedBatchId"
               :clickable="true"
               :key="item.id"
               :postageBatch="item"
@@ -37,7 +38,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { PostageBatch } from "@ethersphere/bee-js";
+import { BatchId, PostageBatch } from "@ethersphere/bee-js";
 import { onMounted } from "@vue/runtime-core";
 import { computed, ref } from "vue";
 import { swarmWizard } from "../storage-wizard/SwarmWizard";
@@ -45,6 +46,7 @@ import { swarmWizard } from "../storage-wizard/SwarmWizard";
 import PostageBatchItem from "./PostageBatch.vue";
 
 const postageBatches = ref<PostageBatch[]>([]);
+const selectedBatchId = ref<BatchId>();
 
 const computedNumberOfResults = computed(() => {
   if (postageBatches.value.length == 0) {
@@ -68,6 +70,7 @@ const emit = defineEmits<{
 }>();
 
 function onSelectedPostageBatch(postageBatch: PostageBatch) {
+  selectedBatchId.value = postageBatch.batchID;
   emit("selectedPostageBatch", postageBatch);
 }
 </script>

@@ -7,6 +7,7 @@
       v-if="theBatch"
       :postageBatch="computedBatch"
       :clickable="false"
+      :selected="false"
     ></PostageBatchComponent>
     <span v-else class="list-group-item">None</span>
   </div>

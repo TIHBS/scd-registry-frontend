@@ -2,7 +2,7 @@
   <div
     class="postage-batch list-group-item"
     @click="clickable ? onClick() : () => {}"
-    :class="{ clickable: clickable }"
+    :class="{ clickable: clickable, selected: selected }"
   >
     <div class="row">
       <div class="col-sm left-column">
@@ -26,6 +26,7 @@ import { swarmWizard } from "../storage-wizard/SwarmWizard";
 const props = defineProps<{
   postageBatch: PostageBatch;
   clickable: boolean;
+  selected: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -58,5 +59,9 @@ function onClick() {
 }
 .clickable {
   cursor: pointer;
+}
+.selected {
+  background-color: grey;
+  color: white;
 }
 </style>
