@@ -1,7 +1,8 @@
+import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
 import fetch from "node-fetch";
 
 class WebserverWizard {
-  async fetchSCD(url: string): Promise<JSON | null> {
+  async fetchSCD(url: string): Promise<SCD> {
     const result = await fetch(url, {
       method: "GET",
       headers: {
@@ -11,7 +12,7 @@ class WebserverWizard {
     try {
       return await result.json();
     } catch (error) {
-      return null;
+      throw error;
     }
   }
 }

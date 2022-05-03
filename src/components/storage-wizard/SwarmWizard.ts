@@ -14,6 +14,7 @@ import {
   Reference,
   UploadResult,
 } from "@ethersphere/bee-js";
+import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
 
 class SwarmWizard {
   public async createPostageBatch(
@@ -38,7 +39,7 @@ class SwarmWizard {
     return await beeDebug.getAllPostageBatch();
   }
 
-  public async downloadSCD(reference: Reference): Promise<JSON> {
+  public async fetchSCD(reference: Reference): Promise<SCD> {
     const bee = createBeeApi();
     const result = await (await bee.downloadFile(reference)).data.text();
     return JSON.parse(result);

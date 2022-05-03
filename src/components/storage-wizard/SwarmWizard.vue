@@ -1,6 +1,6 @@
 <template>
   <div class="swarm-wizard">
-    <label for="form-file ">This is the Swarm wizard</label>
+    <label for="form-file ">This is the Swarm wizard 🐝</label>
     <form id="form-file" @submit.prevent="onSubmit">
       <SelectedPostageBatch
         :batch="computedSelectedBatch"
@@ -42,6 +42,7 @@ import { PostageBatch, UploadResult } from "@ethersphere/bee-js";
 import { computed, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { swarmWizard } from "./SwarmWizard";
+import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
 // @ts-ignore
 import PostageBatchList from "../swarm/PostageBatchList.vue";
 // @ts-ignore
@@ -52,7 +53,7 @@ import SelectedPostageBatch from "../swarm/SelectedPostageBatch.vue";
 import UploadStatusComponent from "../swarm/UploadStatusComponent.vue";
 
 const emit = defineEmits<{
-  (e: "fetchedSCD", scd: JSON | null, url: string | null): void;
+  (e: "fetchedSCD", scd: SCD, url: string | null): void;
 }>();
 
 let file: File | null = null;
@@ -66,7 +67,6 @@ async function onFileChanged(event: FileInputEvent) {
   } else {
     file = null;
   }
-  useToast().info(file ? file.name : "Nothing selected!");
 }
 
 async function onSubmit() {
@@ -84,7 +84,7 @@ function selected(postageBatch: PostageBatch) {
   selectedBatch.value = postageBatch;
 }
 
-function onFinishedUpload(scd: JSON | null, url: string | null) {
+function onFinishedUpload(scd: SCD, url: string | null) {
   emit("fetchedSCD", scd, url);
 }
 </script>

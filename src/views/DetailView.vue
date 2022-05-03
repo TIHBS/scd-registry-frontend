@@ -1,14 +1,22 @@
 <template>
   <div class="detail-view">
-    <h1>This is the detail page {{ id }}</h1>
-    <SignatureVerification
-      v-if="state == State.FETCHED"
-      SignatureVerification
-      :message="scdComputed"
-      :signature="metadata.signature"
-      :author="authorComputed"
-    ></SignatureVerification>
-    <br />
+    <div class="card mb-2">
+      <div class="card-header">
+        <span
+          ><b>ID: {{ id }}</b></span
+        >
+      </div>
+      <div class="list-group-item">
+        <SignatureVerification
+          v-if="state == State.FETCHED"
+          SignatureVerification
+          :message="scdComputed"
+          :signature="metadata.signature"
+          :author="authorComputed"
+        ></SignatureVerification>
+      </div>
+    </div>
+
     <div class="container">
       <div class="row">
         <div class="col-sm border overflow-auto right-column">
@@ -31,6 +39,8 @@ import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
 import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import VueJsonPretty from "vue-json-pretty";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { swarmWizard } from "@/components/storage-wizard/SwarmWizard";
+import { Reference, REFERENCE_HEX_LENGTH } from "@ethersphere/bee-js";
 
 enum State {
   NOT_FETCHED,
@@ -48,7 +58,7 @@ if (id instanceof String) {
   theId = id[0];
 }
 
-const scd = ref<SCD | null>();
+const scd = ref<SCD>();
 const metadata = ref<Registry.SCDMetadataStruct>();
 
 const scdComputed = computed(() => JSON.stringify(scd.value));
@@ -74,9 +84,21 @@ onMounted(async () => {
     blockChainType: retrieved.metadata.blockChainType,
   };
 
-  scd.value = (await webserverWizard.fetchSCD(
-    metadata.value.url
-  )) as SCD | null;
+  if (metadata.value.url.startsWith("swarm://")) {
+    const reference = metadata.value.url.substr(
+      8,
+      metadata.value.url.length
+    ) as Reference;
+
+    if (reference.length != REFERENCE_HEX_LENGTH) {
+      throw new Error(
+        `The swarm reference is not ${REFERENCE_HEX_LENGTH} symbols long!`
+      );
+    }
+    scd.value = (await swarmWizard.fetchSCD(reference)) as SCD;
+  } else {
+    scd.value = (await webserverWizard.fetchSCD(metadata.value.url)) as SCD;
+  }
   state.value = State.FETCHED;
 });
 </script>

@@ -22,11 +22,12 @@
 import { UploadStatus } from "@/util/Swarm";
 import { UploadResult } from "@ethersphere/bee-js";
 import { onMounted } from "@vue/runtime-core";
+import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
 import { ref } from "vue";
 import { swarmWizard } from "../storage-wizard/SwarmWizard";
 
 const emit = defineEmits<{
-  (e: "finishedUpload", scd: JSON | null, url: string | null): void;
+  (e: "finishedUpload", scd: SCD, url: string | null): void;
 }>();
 
 const props = defineProps<{ uploadResult: UploadResult }>();
@@ -40,13 +41,9 @@ onMounted(async () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
   } while (!uploadStatus.value.finished);
 
-  const scd = await swarmWizard.downloadSCD(props.uploadResult.reference);
+  const scd = await swarmWizard.fetchSCD(props.uploadResult.reference);
 
-  emit(
-    "finishedUpload",
-    scd,
-    `${localStorage.getItem("swarm-api")!}/bzz/${props.uploadResult.reference}`
-  );
+  emit("finishedUpload", scd, `swarm://${props.uploadResult.reference}`);
 });
 </script>
 <style scoped>
