@@ -44,25 +44,29 @@
       ></SwarmWizard>
       <br />
       <form @submit.prevent="onSubmit">
-        <div v-if="fetched" class="container">
-          <div class="row">
-            <div class="col-sm border overflow-auto">
-              <VueJsonPretty :path="'res'" :data="scdJson" />
-            </div>
-            <div class="col-sm">
+        <div v-if="fetched" class="card">
+          <div class="card-header">
+            <div class="row">
               <button
                 @click="signAndTransform"
                 type="button"
-                class="btn transform-button btn-outline-primary"
+                class="col-sm btn btn-outline-primary m-1"
               >
-                <i class="bi bi-arrow-right">Sign and transform</i></button
-              ><br />
-              <button type="submit" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-right">Sign and transform</i>
+              </button>
+              <button type="submit" class="col-sm btn btn-outline-primary m-1">
                 Store
               </button>
             </div>
-            <div class="col-sm border overflow-auto">
-              <VueJsonPretty :path="'res'" :data="metadataJson" />
+          </div>
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-sm border overflow-auto m-1">
+                <VueJsonPretty :path="'res'" :data="scdJson" />
+              </div>
+              <div class="col-sm border overflow-auto m-1">
+                <VueJsonPretty :path="'res'" :data="metadataJson" />
+              </div>
             </div>
           </div>
         </div>

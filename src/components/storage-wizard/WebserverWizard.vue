@@ -24,9 +24,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
+import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
 
 const emit = defineEmits<{
-  (e: "fetchedSCD", scd: JSON | null, url: string | null): void;
+  (e: "fetchedSCD", scd: SCD, url: string | null): void;
 }>();
 
 // default to make testing easier.
