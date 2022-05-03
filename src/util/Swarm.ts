@@ -35,10 +35,6 @@ export async function createPostageBatch(
   depth: number
 ): Promise<BatchId> {
   const postageBatch = await beeDebug.createPostageBatch(amount, depth);
-
-  while (!(await beeDebug.getPostageBatch(postageBatch)).usable) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-  }
   return postageBatch;
 }
 
