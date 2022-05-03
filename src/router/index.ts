@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     component: DetailView,
   },
   {
-    path: "/register",
+    path: "/register/:storageType",
     name: "register",
     component: RegisterView,
   },
