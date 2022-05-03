@@ -1,5 +1,9 @@
 <template>
-  <div class="postage-batch">
+  <div
+    class="postage-batch list-group-item"
+    @click="clickable ? onClick() : () => {}"
+    :class="{ clickable: clickable }"
+  >
     <div class="row">
       <div class="col-sm left-column">
         <div><b>Batch ID:</b> {{ thePostageBatch.batchID }}</div>
@@ -21,6 +25,11 @@ import { swarmWizard } from "../storage-wizard/SwarmWizard";
 
 const props = defineProps<{
   postageBatch: PostageBatch;
+  clickable: boolean;
+}>();
+
+const emit = defineEmits<{
+  (e: "selectedPostageBatch", results: PostageBatch): void;
 }>();
 
 const thePostageBatch = ref(props.postageBatch);
@@ -32,6 +41,10 @@ onMounted(async () => {
     await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 });
+
+function onClick() {
+  emit("selectedPostageBatch", thePostageBatch.value);
+}
 </script>
 <style scoped>
 .postage-batch {
@@ -42,5 +55,8 @@ onMounted(async () => {
 }
 .postage-batch .right-column {
   text-align: right;
+}
+.clickable {
+  cursor: pointer;
 }
 </style>

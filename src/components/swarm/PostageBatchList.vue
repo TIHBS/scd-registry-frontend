@@ -23,13 +23,13 @@
       <div class="collapse" id="collapse-batches">
         <ul class="list-group list-group-flush">
           <div v-if="postageBatches.length > 0">
-            <li
+            <PostageBatchItem
               v-for="item in postageBatches"
+              @selectedPostageBatch="onSelectedPostageBatch"
+              :clickable="true"
               :key="item.id"
-              class="list-group-item justify-content-between align-items-start"
-            >
-              <postage-batch-item :postageBatch="item"></postage-batch-item>
-            </li>
+              :postageBatch="item"
+            ></PostageBatchItem>
           </div>
         </ul>
       </div>
@@ -62,6 +62,14 @@ onMounted(async () => {
     await new Promise((resolve) => setTimeout(resolve, 5000));
   } while (true);
 });
+
+const emit = defineEmits<{
+  (e: "selectedPostageBatch", results: PostageBatch): void;
+}>();
+
+function onSelectedPostageBatch(postageBatch: PostageBatch) {
+  emit("selectedPostageBatch", postageBatch);
+}
 </script>
 <style scoped>
 .postage-batch-list .left-column {
@@ -70,7 +78,6 @@ onMounted(async () => {
 .postage-batch-list .right-column {
   text-align: right;
 }
-
 .hide-show {
   font-size: 10px;
 }

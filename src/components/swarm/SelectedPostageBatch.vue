@@ -3,13 +3,12 @@
     <div class="card-header">
       <b>Selected postage batch</b>
     </div>
-    <div class="list-group-item">
-      <PostageBatchComponent
-        v-if="theBatch"
-        :postageBatch="computedBatch"
-      ></PostageBatchComponent>
-      <span v-else>None</span>
-    </div>
+    <PostageBatchComponent
+      v-if="theBatch"
+      :postageBatch="computedBatch"
+      :clickable="false"
+    ></PostageBatchComponent>
+    <span v-else class="list-group-item">None</span>
   </div>
 </template>
 <script setup lang="ts">

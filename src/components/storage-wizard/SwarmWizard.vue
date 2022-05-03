@@ -10,7 +10,10 @@
         @createdPostageBatch="selected"
         class="mb-2"
       ></CreatePostageBatch>
-      <PostageBatchList class="mb-2"></PostageBatchList>
+      <PostageBatchList
+        @selectedPostageBatch="selected"
+        class="mb-2"
+      ></PostageBatchList>
       <div class="input-group">
         <input
           type="file"
@@ -56,12 +59,10 @@ async function onFileChanged(event: FileInputEvent) {
 }
 
 async function onSubmit() {
-  console.log(3243243242);
   result.value = await swarmWizard.upload(file!);
 }
 
 function selected(postageBatch: PostageBatch) {
-  console.log(postageBatch.batchID);
   selectedBatch.value = postageBatch;
 }
 </script>
