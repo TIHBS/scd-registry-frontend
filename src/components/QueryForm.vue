@@ -57,7 +57,7 @@ const emit = defineEmits<{
 }>();
 
 const query = ref("");
-const pickedSearchMode = ref(getSearchMode());
+const pickedSearchMode = ref("TRUSTWORTHY");
 
 watch(pickedSearchMode, (pickedSearchMode) => {
   localStorage.setItem("pickedSearchMode", pickedSearchMode);
@@ -68,13 +68,6 @@ onMounted(() => {
     pickedSearchMode.value = localStorage.getItem("pickedSearchMode")!;
   }
 });
-
-function getSearchMode(): string {
-  if (localStorage.getItem("pickedSearchMode")) {
-    return localStorage.getItem("pickedSearchMode")!;
-  }
-  throw new Error("No search mode was specified!");
-}
 
 async function onSubmit() {
   const scds = await queryService.query(query.value);
