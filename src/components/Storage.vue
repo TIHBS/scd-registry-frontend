@@ -38,7 +38,10 @@
         @fetchedSCD="onFetchedSCD"
       ></WebserverWizard>
       <ipfs v-if="storageType == StorageType.IPFS"></ipfs>
-      <swarm-wizard v-if="storageType == StorageType.Swarm"></swarm-wizard>
+      <SwarmWizard
+        v-if="storageType == StorageType.Swarm"
+        @fetchedSCD="onFetchedSCD"
+      ></SwarmWizard>
       <br />
       <form @submit.prevent="onSubmit">
         <div v-if="fetched" class="container">

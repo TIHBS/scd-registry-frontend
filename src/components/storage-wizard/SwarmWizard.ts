@@ -2,23 +2,18 @@ import {
   createBeeApi,
   createBeeDebugApi,
   createPostageBatch,
+  getUploadStatus,
   uploadFile,
+  UploadStatus,
   uploadString,
 } from "@/util/Swarm";
 import {
   BatchId,
   NumberString,
   PostageBatch,
+  Reference,
   UploadResult,
 } from "@ethersphere/bee-js";
-
-interface BatchID {
-  batchID: string;
-}
-
-interface Reference {
-  reference: string;
-}
 
 class SwarmWizard {
   public async createPostageBatch(
@@ -43,10 +38,16 @@ class SwarmWizard {
     return await beeDebug.getAllPostageBatch();
   }
 
-  public async upload(data: string | File): Promise<UploadResult> {
-    const beeDebug = createBeeDebugApi();
-    const postageBatch = await createPostageBatch(beeDebug, "10000000", 20);
+  public async downloadSCD(reference: Reference): Promise<JSON> {
+    const bee = createBeeApi();
+    const result = await (await bee.downloadFile(reference)).data.text();
+    return JSON.parse(result);
+  }
 
+  public async upload(
+    data: string | File,
+    postageBatch: BatchId
+  ): Promise<UploadResult> {
     const bee = createBeeApi();
 
     let result: UploadResult;
@@ -58,6 +59,11 @@ class SwarmWizard {
       throw new Error("Data type not supported!");
     }
 
+    return result;
+  }
+
+  getUploadStatus(tagUid: number): Promise<UploadStatus> {
+    const result = getUploadStatus(tagUid, createBeeApi());
     return result;
   }
 }

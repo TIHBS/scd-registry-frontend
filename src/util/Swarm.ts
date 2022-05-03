@@ -8,7 +8,7 @@ import {
 } from "@ethersphere/bee-js";
 
 export function createBeeApi(): Bee {
-  let url = localStorage.getItem("swarm-debug");
+  let url = localStorage.getItem("swarm-api");
   if (!url) {
     throw new Error("You have to set the Swarm api url in the settings!");
   }
@@ -61,4 +61,28 @@ export async function uploadFile(
 ): Promise<UploadResult> {
   const result = await bee.uploadFile(postageBatch, data);
   return result;
+}
+
+export interface UploadStatus {
+  finished: boolean;
+  processed: number;
+  synced: number;
+}
+
+export async function getUploadStatus(
+  tagUid: number,
+  bee: Bee
+): Promise<UploadStatus> {
+  const result = await bee.retrieveTag(tagUid);
+
+  const finished =
+    result.processed == result.total && result.synced == result.total;
+  const processedPercentage = result.synced / result.total;
+  const syncedPercentage = result.synced / result.total;
+
+  return {
+    finished: finished,
+    processed: processedPercentage,
+    synced: syncedPercentage,
+  };
 }
