@@ -7,7 +7,7 @@ import {
   Metadata,
   toContractType,
 } from "../../external/decentralised-scd-registry-common/src/Conversion";
-import { connectMetamask } from "@/ethereum/Metamask";
+import { checkIfLoggedIn, connectMetamask } from "@/ethereum/Metamask";
 import { Provider } from "@ethersproject/abstract-provider/lib/index";
 
 class EthereumConnector {
@@ -33,6 +33,12 @@ class EthereumConnector {
     if (this.signer) {
       return this.signer;
     }
+
+    if (await checkIfLoggedIn()) {
+      this.signer = await this.getSigner();
+      return this.signer;
+    }
+
     if (!this.provider) {
       if (localStorage.getItem("networkid")) {
         this.provider = await ethers.getDefaultProvider(
