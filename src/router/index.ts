@@ -29,11 +29,6 @@ const routes: Array<RouteRecordRaw> = [
     component: SettingsView,
   },
   {
-    path: "/power-gate",
-    name: "power-gate",
-    component: PowerGate,
-  },
-  {
     path: "/ipfs",
     name: "ipfs",
     component: IPFSView,

@@ -5,7 +5,7 @@
         v-if="storageType == 'web'"
         @fetchedSCD="onFetchedSCD"
       ></WebserverWizard>
-      <IPFS v-if="storageType == 'ipfs'"></IPFS>
+      <IPFSWizard v-if="storageType == 'ipfs'"></IPFSWizard>
       <SwarmWizard
         v-if="storageType == 'swarm'"
         @fetchedSCD="onFetchedSCD"
@@ -44,7 +44,8 @@
 </template>
 <script setup lang="ts">
 import { StorageType } from "@/util/StorageType";
-import IPFS from "@/components/storage-wizard/IPFS.vue";
+// @ts-ignore
+import IPFSWizard from "@/components/storage-wizard/IPFSWizard.vue";
 // @ts-ignore
 import SwarmWizard from "@/components/storage-wizard/SwarmWizard.vue";
 // @ts-ignore
