@@ -41,6 +41,7 @@ import VueJsonPretty from "vue-json-pretty";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 import { swarmWizard } from "@/components/storage-wizard/SwarmWizard";
 import { Reference, REFERENCE_HEX_LENGTH } from "@ethersphere/bee-js";
+import { extractReferenceFromUrl } from "@/util/Swarm";
 
 enum State {
   NOT_FETCHED,
@@ -85,16 +86,7 @@ onMounted(async () => {
   };
 
   if (metadata.value.url.startsWith("swarm://")) {
-    const reference = metadata.value.url.substr(
-      8,
-      metadata.value.url.length
-    ) as Reference;
-
-    if (reference.length != REFERENCE_HEX_LENGTH) {
-      throw new Error(
-        `The swarm reference is not ${REFERENCE_HEX_LENGTH} symbols long!`
-      );
-    }
+    const reference = extractReferenceFromUrl(metadata.value.url);
     scd.value = (await swarmWizard.fetchSCD(reference)) as SCD;
   } else {
     scd.value = (await webserverWizard.fetchSCD(metadata.value.url)) as SCD;

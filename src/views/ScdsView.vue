@@ -14,15 +14,7 @@
           :key="item.id"
           class="list-group-item justify-content-between align-items-start"
         >
-          <scd-item
-            :id="uniqueId('item-')"
-            :scdId="item.id"
-            :name="item.metadata.name"
-            :author="item.metadata.author"
-            :url="item.metadata.url"
-            :signature="item.metadata.signature"
-            :address="item.metadata.internalAddress"
-          ></scd-item>
+          <scd-item :metadata="item"></scd-item>
         </li>
       </div>
     </ul>

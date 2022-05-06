@@ -4,6 +4,8 @@ import {
   BeeDebug,
   NumberString,
   PostageBatch,
+  Reference,
+  REFERENCE_HEX_LENGTH,
   UploadResult,
 } from "@ethersphere/bee-js";
 
@@ -85,4 +87,14 @@ export async function getUploadStatus(
     processed: processedPercentage,
     synced: syncedPercentage,
   };
+}
+
+export function extractReferenceFromUrl(url: string): Reference {
+  const reference = url.substring(8, url.length) as Reference;
+  if (reference.length != REFERENCE_HEX_LENGTH) {
+    throw new Error(
+      `The swarm reference is not ${REFERENCE_HEX_LENGTH} symbols long!`
+    );
+  }
+  return reference;
 }
