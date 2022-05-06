@@ -1,66 +1,65 @@
 <template>
   <div class="register">
-    <div v-if="storageType != StorageType.None">
-      <WebserverWizard
-        v-if="storageType == 'web'"
-        @fetchedSCD="onFetchedSCD"
-      ></WebserverWizard>
-      <IPFSWizard v-if="storageType == 'ipfs'"></IPFSWizard>
-      <SwarmWizard
-        v-if="storageType == 'swarm'"
-        @fetchedSCD="onFetchedSCD"
-      ></SwarmWizard>
-      <br />
-      <form @submit.prevent="onSubmit">
-        <div v-if="fetched" class="card">
-          <div class="card-header">
-            <div class="row">
-              <button
-                @click="signAndTransform"
-                type="button"
-                class="col-sm btn btn-outline-primary m-1"
-              >
-                <i class="bi bi-arrow-right">Sign and transform</i>
-              </button>
-              <button type="submit" class="col-sm btn btn-outline-primary m-1">
-                Store
-              </button>
-            </div>
+    <WebserverWizard
+      v-if="storageType == 'web'"
+      @fetchedSCD="onFetchedSCD"
+    ></WebserverWizard>
+    <IPFSWizard v-if="storageType == 'ipfs'"></IPFSWizard>
+    <SwarmWizard
+      v-if="storageType == 'swarm'"
+      @fetchedSCD="onFetchedSCD"
+    ></SwarmWizard>
+    <br />
+    <form @submit.prevent="onSubmit">
+      <div v-if="fetched" class="card">
+        <div class="card-header">
+          <div class="row">
+            <button
+              @click="signAndTransform"
+              type="button"
+              class="col-sm btn btn-outline-primary m-1"
+            >
+              <i class="bi bi-arrow-right">Sign and transform</i>
+            </button>
+            <button type="submit" class="col-sm btn btn-outline-primary m-1">
+              Store
+            </button>
           </div>
-          <div class="list-group-item">
-            <div class="row">
-              <div class="col-sm border overflow-auto m-1">
-                <VueJsonPretty :path="'res'" :data="scdJson" />
-              </div>
-              <div class="col-sm border overflow-auto m-1">
-                <VueJsonPretty :path="'res'" :data="metadataJson" />
-              </div>
+        </div>
+        <div class="list-group-item">
+          <div class="row">
+            <div class="col-sm border overflow-auto m-1">
+              <VueJsonPretty :path="'res'" :data="scdJson" />
+            </div>
+            <div class="col-sm border overflow-auto m-1">
+              <VueJsonPretty :path="'res'" :data="metadataJson" />
             </div>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </template>
 <script setup lang="ts">
-import { StorageType } from "@/util/StorageType";
 // @ts-ignore
 import IPFSWizard from "@/components/storage-wizard/IPFSWizard.vue";
 // @ts-ignore
 import SwarmWizard from "@/components/storage-wizard/SwarmWizard.vue";
 // @ts-ignore
 import WebserverWizard from "@/components/storage-wizard/WebserverWizard.vue";
-import { computed, ref } from "vue";
 // @ts-ignore
 import VueJsonPretty from "vue-json-pretty";
+import { computed, ref } from "vue";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
-
-const storageType = ref(router.currentRoute.value.params.storageType as string);
+const route = useRoute();
+const storageType = computed(
+  () => router.currentRoute.value.params.storageType as string
+);
 
 const scdJson = ref<SCD | null>();
 const metadataJson = ref<Registry.SCDMetadataStruct>();
