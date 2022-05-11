@@ -18,8 +18,17 @@ export function checkIfMetamaskIsInstalled(): boolean {
   return typeof window.ethereum !== undefined;
 }
 
-export function getNetworkById(id: number) {
-  switch (id) {
+function isString<Type>(value: Type) {
+  return typeof value === "string" || value instanceof String;
+}
+
+export function getNetworkById(id: number | string) {
+  let theId = id;
+  if (isString(id)) {
+    theId = parseInt(id as string);
+  }
+
+  switch (theId) {
     case 1:
       return "Mainnet";
     case 43:

@@ -6,7 +6,11 @@ import {
   Metadata,
   toContractType,
 } from "../../external/decentralised-scd-registry-common/src/Conversion";
-import { checkIfLoggedIn, connectMetamask } from "@/ethereum/Metamask";
+import {
+  checkIfLoggedIn,
+  connectMetamask,
+  getNetworkById,
+} from "@/ethereum/Metamask";
 import { Provider } from "@ethersproject/abstract-provider/lib/index";
 
 class EthereumConnector {
@@ -41,7 +45,7 @@ class EthereumConnector {
     if (!this.provider) {
       if (localStorage.getItem("networkid")) {
         this.provider = await ethers.getDefaultProvider(
-          localStorage.getItem("networkid")!
+          getNetworkById(localStorage.getItem("networkid")!)
         );
       } else {
         throw new Error("You haven't entered a valid network ID");
