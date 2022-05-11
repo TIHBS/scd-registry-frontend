@@ -28,11 +28,6 @@ const routes: Array<RouteRecordRaw> = [
     name: "settings",
     component: SettingsView,
   },
-  {
-    path: "/ipfs",
-    name: "ipfs",
-    component: IPFSView,
-  },
 ];
 
 const router = createRouter({

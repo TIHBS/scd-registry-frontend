@@ -59,23 +59,13 @@
           class="form-control"
         />
       </div>
-      <div class="settings-field">
-        <label for="powergate">Powergate</label>
-        <input
-          id="powergate"
-          v-model.lazy.trim="powergate"
-          type="text"
-          name="powergate"
-          autocomplete="off"
-          class="form-control"
-        />
-      </div>
       <button type="submit" class="btn btn-outline-primary">Save</button>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
+import { sign } from "crypto";
 import { ethers } from "ethers";
 import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
@@ -84,7 +74,6 @@ const networkid = ref("");
 const contractAddress = ref("");
 const swarmDebug = ref("");
 const swarmApi = ref("");
-const powergate = ref("");
 
 const correctNetworkid = computed(async () => {
   try {
@@ -132,10 +121,6 @@ onMounted(() => {
   if (localStorage.getItem("swarm-api")) {
     swarmApi.value = localStorage.getItem("swarm-api")!;
   }
-
-  if (localStorage.getItem("powergate")) {
-    powergate.value = localStorage.getItem("powergate")!;
-  }
 });
 
 async function onSubmit() {
@@ -161,7 +146,6 @@ async function onSubmit() {
     );
     localStorage.setItem("swarm-debug", swarmDebug.value);
     localStorage.setItem("swarm-api", swarmApi.value);
-    localStorage.setItem("powergate", powergate.value);
 
     useToast().success("Saved settings");
   }

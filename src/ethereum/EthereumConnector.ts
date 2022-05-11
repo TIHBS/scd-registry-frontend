@@ -1,7 +1,6 @@
 import { Registry__factory } from "../../external/decentralised-scd-registry-common/src/wrappers/factories/Registry__factory";
 import { BigNumberish, ContractTransaction, ethers, Signer } from "ethers";
 import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
-import scds from "./SCDs";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 import {
   Metadata,

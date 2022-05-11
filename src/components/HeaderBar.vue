@@ -23,9 +23,6 @@
               <router-link class="nav-link" to="/register/swarm"
                 >Swarm</router-link
               >
-              <router-link class="nav-link" to="/register/ipfs"
-                >IPFS</router-link
-              >
             </ul>
           </li>
           <li class="nav-item">
@@ -33,9 +30,6 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/settings">Settings</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/ipfs">IPFS</router-link>
           </li>
         </ul>
       </div>
