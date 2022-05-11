@@ -1,4 +1,4 @@
-import { create, globSource, CID } from "ipfs-http-client";
+const { create, globSource } = require("ipfs-http-client");
 
 async function progressFunction(bytes: number, path?: string) {
   console.info(`Byte: ${bytes} ${path ? path : ""}`);
@@ -11,7 +11,7 @@ async function main() {
 
   const ipfs = await create({ url: new URL(gateway) });
 
-  let cid: CID;
+  let cid: string;
   for await (const file of ipfs.addAll(globSource("dist", "**/*"), {
     pin: true,
     wrapWithDirectory: true,
