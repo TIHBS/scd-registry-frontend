@@ -1,10 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import ScdsView from "@/views/ScdsView.vue";
-import RegisterView from "@/views/RegisterView.vue";
-import SettingsView from "@/views/SettingsView.vue";
-import PowerGate from "@/views/PowerGate.vue";
-import IPFSView from "@/views/IPFSView.vue";
-import DetailView from "@/views/DetailView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/scds" },
@@ -16,17 +11,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/scds/:id",
     name: "detail",
-    component: DetailView,
+    component: () =>
+      import(/* webpackChunkName: "detail" */ "../views/DetailView.vue"),
   },
   {
     path: "/register/:storageType",
     name: "register",
-    component: RegisterView,
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/RegisterView.vue"),
   },
   {
     path: "/settings",
     name: "settings",
-    component: SettingsView,
+    component: () =>
+      import(/* webpackChunkName: "settings" */ "../views/SettingsView.vue"),
   },
 ];
 

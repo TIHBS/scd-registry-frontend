@@ -1,6 +1,12 @@
 <template>
   <div class="swarm-wizard">
     <label for="form-file ">This is the Swarm wizard 🐝</label>
+    <UploadStatusComponent
+      class="mb-2"
+      v-if="uploadResult"
+      @finishedUpload="onFinishedUpload"
+      :uploadResult="uploadResult"
+    ></UploadStatusComponent>
     <form id="form-file" @submit.prevent="onSubmit">
       <SelectedPostageBatch
         :batch="computedSelectedBatch"
@@ -14,7 +20,7 @@
         @selectedPostageBatch="selected"
         class="mb-2"
       ></PostageBatchList>
-      <div class="input-group mb-2">
+      <div class="input-group">
         <input
           type="file"
           @change="onFileChanged"
@@ -28,11 +34,6 @@
           Upload
         </button>
       </div>
-      <UploadStatusComponent
-        v-if="uploadResult"
-        @finishedUpload="onFinishedUpload"
-        :uploadResult="uploadResult"
-      ></UploadStatusComponent>
     </form>
   </div>
 </template>
