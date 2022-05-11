@@ -5,7 +5,7 @@ module.exports = defineConfig({
   lintOnSave: false,
   publicPath: "./",
   configureWebpack: {
-    devtool: "source-map",
+    devtool: "inline-source-map",
     resolve: {
       fallback: {
         path: require.resolve("path-browserify"),
