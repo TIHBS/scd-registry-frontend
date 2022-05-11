@@ -9,7 +9,7 @@ async function main() {
     ? process.env.SWARM_DEBUG
     : "http://localhost:1635";
 
-  const amount = process.env.AMOUNT ? process.env.AMOUNT : "10000000";
+  const amount = process.env.AMOUNT ? process.env.AMOUNT : "1000000";
   const depth = parseInt(process.env.DEPTH ? process.env.DEPTH : "20");
 
   const directory = process.env.DIRECTORY ? process.env.DIRECTORY : "./dist";
