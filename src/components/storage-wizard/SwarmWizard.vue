@@ -40,7 +40,6 @@
 import { FileInputEvent } from "@/util/FileInputEvent";
 import { PostageBatch, UploadResult } from "@ethersphere/bee-js";
 import { computed, ref } from "vue";
-import { useToast } from "vue-toastification";
 import { swarmWizard } from "./SwarmWizard";
 import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
 // @ts-ignore
