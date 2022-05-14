@@ -9,8 +9,9 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "debug:firefox": "firefox -start-debugger-server",
-    "start:contract": "docker-compose -f external/decentralised-scd-registry/docker-compose.yml up",
-    "start:webserver-storage": "docker-compose -f external/webserver-storage/docker-compose.yml up"
+    "start:bee": "bee-factory start 1.5.1",
+    "start": "serve -l 47771 ./dist",
+    "prestart": "npm run build"
   },
   "dependencies": {
     "@ethersphere/bee-js": "^3.3.4",
