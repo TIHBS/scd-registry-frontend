@@ -1,15 +1,25 @@
 version: "3.7"
 services:
-  decentralised-scd-registry-deployer:
-    container_name: decentralised-scd-registry-deployer
+  decentralised-scd-registry-ipfs:
+    container_name: decentralised-scd-registry-ipfs
     build:
       context: .
-      dockerfile: docker/decentralised-scd-registry-deployer/Dockerfile
+      dockerfile: docker/decentralised-scd-registry-ipfs/Dockerfile
     environment:
       - IPFS_GATEWAY=http://ipfs-frontend:5001
     restart: "no"
     depends_on:
       - ipfs-frontend
+
+  decentralised-scd-registry-swarm:
+    container_name: decentralised-scd-registry-swarm
+    build:
+      context: .
+      dockerfile: docker/decentralised-scd-registry-swarm/Dockerfile
+    environment:
+      - SWARM_API=${SWARM_API:-http://172.17.0.1:1633}
+      - SWARM_DEBUG=${SWARM_DEBUG:-http://172.17.0.1:1635}
+    restart: "no"
 
   ipfs-frontend:
     container_name: ipfs-frontend
