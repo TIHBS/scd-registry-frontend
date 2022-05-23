@@ -77,7 +77,6 @@ const swarmApi = ref("");
 
 const correctNetworkid = computed(async () => {
   try {
-    console.log(new URL(externalSearchProvider.value).toString());
     return true;
   } catch (error) {
     return false;

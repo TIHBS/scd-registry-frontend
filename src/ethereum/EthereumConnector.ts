@@ -122,8 +122,16 @@ class EthereumConnector {
     };
   }
 
-  public verifySignature(message: string, signature: string): string {
-    return ethers.utils.verifyMessage(message, signature);
+  public verifySignature(
+    message: string,
+    pubKey: string,
+    signature: string
+  ): boolean {
+    try {
+      return ethers.utils.verifyMessage(message, signature) === pubKey;
+    } catch (err) {
+      throw err;
+    }
   }
 }
 

@@ -3,15 +3,14 @@
     <div class="card mb-2">
       <div class="card-header">
         <span
-          ><b>ID: {{ id }}</b></span
+          ><b>ID: {{ theId }}</b></span
         >
       </div>
       <div class="list-group-item">
         <SignatureVerification
           v-if="state == State.FETCHED"
-          SignatureVerification
           :message="scdComputed"
-          :signature="metadata.signature"
+          :signature="signatureComputed"
           :author="authorComputed"
         ></SignatureVerification>
       </div>
@@ -32,7 +31,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import SignatureVerification from "@/components/SignatureVerification.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
@@ -40,7 +39,6 @@ import { Registry } from "../../external/decentralised-scd-registry-common/src/w
 import VueJsonPretty from "vue-json-pretty";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
 import { swarmWizard } from "@/components/storage-wizard/SwarmWizard";
-import { Reference, REFERENCE_HEX_LENGTH } from "@ethersphere/bee-js";
 import { extractReferenceFromUrl } from "@/util/Swarm";
 
 enum State {
@@ -50,14 +48,8 @@ enum State {
 const state = ref(State.NOT_FETCHED);
 
 const router = useRouter();
-let id = router.currentRoute.value.params.id;
 
-let theId = "";
-if (id instanceof String) {
-  theId = id as string;
-} else {
-  theId = id[0];
-}
+const theId = computed(() => router.currentRoute.value.params.id as string);
 
 const scd = ref<SCD>();
 const metadata = ref<Registry.SCDMetadataStruct>();
@@ -66,8 +58,8 @@ const scdComputed = computed(() => JSON.stringify(scd.value));
 const signatureComputed = computed(() => metadata.value?.signature);
 const authorComputed = computed(() => metadata.value?.author);
 
-onMounted(async () => {
-  const retrieved = await ethereumConnector.retrieveById(theId);
+nextTick(async () => {
+  const retrieved = await ethereumConnector.retrieveById(theId.value);
   if (!retrieved.metadata.isValid) {
     throw new Error("No SCD with this id exists!");
   }

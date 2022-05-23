@@ -48,7 +48,6 @@ class QueryService {
     }
 
     url = `${url}?onlyId=true&query=${query}`;
-    console.log(url);
 
     const result = await fetch(url, {
       method: "GET",

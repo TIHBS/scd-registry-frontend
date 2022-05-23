@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 enum State {
   WAITING,
@@ -34,16 +34,19 @@ const props = defineProps<{
 
 const state = ref(State.WAITING);
 
-const result = ethereumConnector.verifySignature(
-  props.message,
-  props.signature
-);
-
-if (result === props.author) {
-  state.value = State.VERIFIED;
-} else {
-  state.value = State.UNVERIFIED;
-}
+onMounted(async () => {
+  try {
+    const result = ethereumConnector.verifySignature(
+      props.message,
+      props.author,
+      props.signature
+    );
+    state.value = result ? State.VERIFIED : State.UNVERIFIED;
+  } catch (err) {
+    state.value = State.UNVERIFIED;
+    throw err;
+  }
+});
 </script>
 
 <style scoped>
