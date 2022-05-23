@@ -59,7 +59,7 @@ async function createCorrectUrl(url: string) {
     const reference = extractReferenceFromUrl(url);
     return new URL(
       `bzz/${reference}`,
-      localStorage.getItem("swarm-api")!
+      localStorage.getItem("swarmApi")!
     ).toString();
   }
   return url;

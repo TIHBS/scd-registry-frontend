@@ -16,12 +16,12 @@
         >
       </div>
       <div class="settings-field">
-        <label for="contract-address">Contract address</label>
+        <label for="contractAddress">Contract address</label>
         <input
-          id="contract-address"
+          id="contractAddress"
           v-model.lazy.trim="contractAddress"
           type="text"
-          name="contract-address"
+          name="contractAddress"
           autocomplete="off"
           class="form-control"
         />
@@ -38,23 +38,23 @@
         />
       </div>
       <div class="settings-field">
-        <label for="swarm-debug">Swarm debug</label>
+        <label for="swarmDebug">Swarm debug</label>
         <input
-          id="swarm-debug"
+          id="swarmDebug"
           v-model.lazy.trim="swarmDebug"
           type="text"
-          name="swarm-debug"
+          name="swarmDebug"
           autocomplete="off"
           class="form-control"
         />
       </div>
       <div class="settings-field">
-        <label for="swarm-api">Swarm api</label>
+        <label for="swarmApi">Swarm api</label>
         <input
-          id="swarm-api"
+          id="swarmApi"
           v-model.lazy.trim="swarmApi"
           type="text"
-          name="swarm-api"
+          name="swarmApi"
           autocomplete="off"
           class="form-control"
         />
@@ -103,8 +103,8 @@ onMounted(() => {
     networkid.value = localStorage.getItem("networkid")!;
   }
 
-  if (localStorage.getItem("contract-address")) {
-    contractAddress.value = localStorage.getItem("contract-address")!;
+  if (localStorage.getItem("contractAddress")) {
+    contractAddress.value = localStorage.getItem("contractAddress")!;
   }
 
   if (localStorage.getItem("externalSearchProvider")) {
@@ -113,12 +113,12 @@ onMounted(() => {
     )!;
   }
 
-  if (localStorage.getItem("swarm-debug")) {
-    swarmDebug.value = localStorage.getItem("swarm-debug")!;
+  if (localStorage.getItem("swarmDebug")) {
+    swarmDebug.value = localStorage.getItem("swarmDebug")!;
   }
 
-  if (localStorage.getItem("swarm-api")) {
-    swarmApi.value = localStorage.getItem("swarm-api")!;
+  if (localStorage.getItem("swarmApi")) {
+    swarmApi.value = localStorage.getItem("swarmApi")!;
   }
 });
 
@@ -138,13 +138,13 @@ async function onSubmit() {
 
   if (noError) {
     localStorage.setItem("networkid", networkid.value);
-    localStorage.setItem("contract-address", contractAddress.value);
+    localStorage.setItem("contractAddress", contractAddress.value);
     localStorage.setItem(
       "externalSearchProvider",
       externalSearchProvider.value
     );
-    localStorage.setItem("swarm-debug", swarmDebug.value);
-    localStorage.setItem("swarm-api", swarmApi.value);
+    localStorage.setItem("swarmDebug", swarmDebug.value);
+    localStorage.setItem("swarmApi", swarmApi.value);
 
     useToast().success("Saved settings");
   }

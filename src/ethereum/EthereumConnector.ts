@@ -53,10 +53,10 @@ class EthereumConnector {
   }
 
   private getContractAddress(): string {
-    if (!localStorage.getItem("contract-address")) {
+    if (!localStorage.getItem("contractAddress")) {
       throw new Error("You have to specify a contract address!");
     }
-    return localStorage.getItem("contract-address")!;
+    return localStorage.getItem("contractAddress")!;
   }
 
   private async createRegistryContractWithSigner(): Promise<Registry> {

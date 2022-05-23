@@ -1,20 +1,22 @@
 <template>
-  <span v-if="isLoggedIn" class="navbar-text">{{ computedAddress }}</span>
-  <div
-    v-else-if="waiting"
-    class="spinner-border btn-outline-success"
-    role="status"
-  ></div>
-  <div v-else>
-    <button
-      v-if="isMetamaskSupported"
-      class="btn btn-outline-success"
-      type="button"
-      @click="displayAddress"
-    >
-      Connect Metamask
-    </button>
-    <span v-else class="navbar-text">Install Metamask</span>
+  <div id="metamask-connect-button">
+    <span v-if="isLoggedIn" class="navbar-text">{{ computedAddress }}</span>
+    <div
+      v-else-if="waiting"
+      class="spinner-border btn-outline-success"
+      role="status"
+    ></div>
+    <div v-else>
+      <button
+        v-if="isMetamaskSupported"
+        class="btn btn-outline-success"
+        type="button"
+        @click="displayAddress"
+      >
+        Connect Metamask
+      </button>
+      <span v-else class="navbar-text">Install Metamask</span>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

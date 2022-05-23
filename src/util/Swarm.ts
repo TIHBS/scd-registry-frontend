@@ -10,7 +10,7 @@ import {
 } from "@ethersphere/bee-js";
 
 export function createBeeApi(): Bee {
-  let url = localStorage.getItem("swarm-api");
+  let url = localStorage.getItem("swarmApi");
   if (!url) {
     throw new Error("You have to set the Swarm api url in the settings!");
   }
@@ -18,7 +18,7 @@ export function createBeeApi(): Bee {
 }
 
 export function createBeeDebugApi(): BeeDebug {
-  let url = localStorage.getItem("swarm-debug");
+  let url = localStorage.getItem("swarmDebug");
   if (!url) {
     throw new Error("You have to set the Swarm debug url in the settings!");
   }
