@@ -9,9 +9,9 @@
       <div class="list-group-item">
         <SignatureVerification
           v-if="state == State.FETCHED"
-          :message="scdComputed"
-          :signature="signatureComputed"
-          :author="authorComputed"
+          :message="JSON.stringify(scd)"
+          :signature="metadata.signature"
+          :author="metadata.author"
         ></SignatureVerification>
       </div>
     </div>
@@ -31,7 +31,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import SignatureVerification from "@/components/SignatureVerification.vue";
-import { computed, nextTick, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
@@ -49,7 +49,11 @@ const state = ref(State.NOT_FETCHED);
 
 const router = useRouter();
 
-const theId = computed(() => router.currentRoute.value.params.id as string);
+const theId = computed(() => {
+  const id = router.currentRoute.value.params.id as string;
+  render(id);
+  return id;
+});
 
 const scd = ref<SCD>();
 const metadata = ref<Registry.SCDMetadataStruct>();
@@ -58,8 +62,13 @@ const scdComputed = computed(() => JSON.stringify(scd.value));
 const signatureComputed = computed(() => metadata.value?.signature);
 const authorComputed = computed(() => metadata.value?.author);
 
-nextTick(async () => {
-  const retrieved = await ethereumConnector.retrieveById(theId.value);
+onMounted(async () => {
+  render(theId.value);
+});
+
+async function render(id: string) {
+  state.value = State.NOT_FETCHED;
+  const retrieved = await ethereumConnector.retrieveById(id);
   if (!retrieved.metadata.isValid) {
     throw new Error("No SCD with this id exists!");
   }
@@ -84,7 +93,7 @@ nextTick(async () => {
     scd.value = (await webserverWizard.fetchSCD(metadata.value.url)) as SCD;
   }
   state.value = State.FETCHED;
-});
+}
 </script>
 <style scoped>
 .left-column {
