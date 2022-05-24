@@ -66,6 +66,8 @@ watch(pickedSearchMode, (pickedSearchMode) => {
 onMounted(() => {
   if (localStorage.getItem("pickedSearchMode")) {
     pickedSearchMode.value = localStorage.getItem("pickedSearchMode")!;
+  } else {
+    localStorage.setItem("pickedSearchMode", "TRUSTWORTHY");
   }
 });
 
