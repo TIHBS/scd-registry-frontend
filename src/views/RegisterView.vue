@@ -59,7 +59,7 @@ const storageType = computed(
 );
 
 const scdJson = ref<SCD | null>();
-const metadataJson = ref<Registry.SCDMetadataStruct>();
+const metadataJson = ref<Registry.SCDMetadataInStruct>();
 
 const fetched = ref(false);
 

@@ -2,14 +2,13 @@ import { Registry__factory } from "../../external/decentralised-scd-registry-com
 import { BigNumberish, ContractTransaction, ethers, Signer } from "ethers";
 import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
-import { toContractType } from "../../external/decentralised-scd-registry-common/src/Conversion";
 import {
   checkIfLoggedIn,
   connectMetamask,
   getNetworkById,
 } from "@/ethereum/Metamask";
 import { Provider } from "@ethersproject/abstract-provider/lib/index";
-import { Metadata } from "external/decentralised-scd-registry-common/src/interfaces/Metadata";
+import { fromBlockchainType } from "../../external/decentralised-scd-registry-common/src/interfaces/Types";
 
 class EthereumConnector {
   private signer: Signer | undefined;
@@ -89,38 +88,57 @@ class EthereumConnector {
     ).retrieveById(id);
   }
 
-  async store(scd: Registry.SCDMetadataStruct): Promise<ContractTransaction> {
+  async store(scd: Registry.SCDMetadataInStruct): Promise<ContractTransaction> {
     return await (await this.createRegistryContractWithSigner()).store(scd);
   }
 
   public async scdToContractMetadata(
     scd: SCD,
     url: string
-  ): Promise<Registry.SCDMetadataStruct> {
-    return await toContractType(await this.scdToMetadata(scd, url));
-  }
-
-  private async scdToMetadata(scd: SCD, url: string): Promise<Metadata> {
-    const functionNames = scd.functions.map((func) => func.name);
-    const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
+  ): Promise<Registry.SCDMetadataInStruct> {
     const signature = await (
       await this.getSigner()
     ).signMessage(JSON.stringify(scd));
-    const authorAddress = await (await this.getSigner()).getAddress();
 
-    return {
+    const functionNames = scd.functions.map((func) => func.name);
+    const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
+
+    const contractMetadata: Registry.SCDMetadataInStruct = {
       name: scd.name,
-      author: authorAddress,
-      version: scd.version,
+      internalAddress: scd.internal_address,
+      url: url,
       signature: signature,
-      internal_address: scd.internal_address,
-      url: new URL(url),
-      blockchain_type: scd.blockchain_type,
+      version: scd.version,
       functions: functionNames,
       events: eventNames,
-      is_valid: true,
+      isValid: true,
+      blockChainType: fromBlockchainType.get(scd.blockchain_type)!,
     };
+
+    return contractMetadata;
   }
+
+  //  private async scdToMetadata(scd: SCD, url: string): Promise<Metadata> {
+  //    const functionNames = scd.functions.map((func) => func.name);
+  //    const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
+  //    const signature = await (
+  //      await this.getSigner()
+  //    ).signMessage(JSON.stringify(scd));
+  //    const authorAddress = await (await this.getSigner()).getAddress();
+  //
+  //    return {
+  //      name: scd.name,
+  //      author: authorAddress,
+  //      version: scd.version,
+  //      signature: signature,
+  //      internal_address: scd.internal_address,
+  //      url: new URL(url),
+  //      blockchain_type: scd.blockchain_type,
+  //      functions: functionNames,
+  //      events: eventNames,
+  //      is_valid: true,
+  //    };
+  //  }
 
   public verifySignature(
     message: string,
