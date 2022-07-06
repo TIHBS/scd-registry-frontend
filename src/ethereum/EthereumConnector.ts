@@ -118,28 +118,6 @@ class EthereumConnector {
     return contractMetadata;
   }
 
-  //  private async scdToMetadata(scd: SCD, url: string): Promise<Metadata> {
-  //    const functionNames = scd.functions.map((func) => func.name);
-  //    const eventNames = scd.events ? scd.events.map((event) => event.name) : [];
-  //    const signature = await (
-  //      await this.getSigner()
-  //    ).signMessage(JSON.stringify(scd));
-  //    const authorAddress = await (await this.getSigner()).getAddress();
-  //
-  //    return {
-  //      name: scd.name,
-  //      author: authorAddress,
-  //      version: scd.version,
-  //      signature: signature,
-  //      internal_address: scd.internal_address,
-  //      url: new URL(url),
-  //      blockchain_type: scd.blockchain_type,
-  //      functions: functionNames,
-  //      events: eventNames,
-  //      is_valid: true,
-  //    };
-  //  }
-
   public verifySignature(
     message: string,
     pubKey: string,

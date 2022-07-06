@@ -13,6 +13,11 @@
           :signature="metadata.signature"
           :author="metadata.author"
         ></SignatureVerification>
+        <PubKeyVerification
+          v-if="state == State.FETCHED"
+          :pubKeyMetadata="metadata.author"
+          :pubkeyScd="scd.author_pub_key"
+        ></PubKeyVerification>
       </div>
     </div>
 
@@ -31,6 +36,8 @@
 <script setup lang="ts">
 // @ts-ignore
 import SignatureVerification from "@/components/SignatureVerification.vue";
+// @ts-ignore
+import PubKeyVerification from "@/components/PubKeyVerification.vue";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
