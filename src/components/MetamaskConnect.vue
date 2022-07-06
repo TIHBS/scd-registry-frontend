@@ -42,7 +42,9 @@ onMounted(async () => {
   }
   window.ethereum.on("accountsChanged", (accounts: string[]) => {
     isLoggedIn.value = accounts.length != 0;
-    if (!isLoggedIn.value) {
+    if (isLoggedIn.value) {
+      displayAddress();
+    } else {
       ethereumConnector.setSigner(undefined);
     }
   });
