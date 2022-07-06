@@ -111,7 +111,6 @@ class EthereumConnector {
       version: scd.version,
       functions: functionNames,
       events: eventNames,
-      isValid: true,
       blockChainType: fromBlockchainType.get(scd.blockchain_type)!,
     };
 
