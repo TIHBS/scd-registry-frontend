@@ -2,11 +2,7 @@ import { Registry__factory } from "../../external/decentralised-scd-registry-com
 import { BigNumberish, ContractTransaction, ethers, Signer } from "ethers";
 import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
 import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
-import {
-  checkIfLoggedIn,
-  connectMetamask,
-  getNetworkById,
-} from "@/ethereum/Metamask";
+import { checkIfLoggedIn, connectMetamask } from "@/ethereum/Metamask";
 import { Provider } from "@ethersproject/abstract-provider/lib/index";
 import { fromBlockchainType } from "../../external/decentralised-scd-registry-common/src/interfaces/Types";
 
@@ -40,9 +36,9 @@ class EthereumConnector {
     }
 
     if (!this.provider) {
-      if (localStorage.getItem("networkid")) {
+      if (localStorage.getItem("networkish")) {
         this.provider = await ethers.getDefaultProvider(
-          getNetworkById(localStorage.getItem("networkid")!)
+          localStorage.getItem("networkish")!
         );
       } else {
         throw new Error("You haven't entered a valid network ID");
