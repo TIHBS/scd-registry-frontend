@@ -2,6 +2,19 @@
 
 This is the frontend of the SCD registry.
 It can be served with [serve](https://www.npmjs.com/package/serve), [IPFS](https://ipfs.io/) or [Swarm](https://www.ethswarm.org/).
+This repository contains submodules.
+Thus, users should clone this repository by running:
+
+```bash
+git clone --recurse-submodules -j8 git@github.com:GarondEisenfaust/scd-registry-meta.git
+```
+
+Or after cloning, it users should run:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Requirements
 
 - npm
