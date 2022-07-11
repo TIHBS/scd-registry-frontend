@@ -1,34 +1,47 @@
-# vue-tutorial
+# Frontend
 
-## Project setup
-```
-npm install
-```
+This is the frontend of the SCD registry.
+It can be served with [serve](https://www.npmjs.com/package/serve), [IPFS](https://ipfs.io/) or [Swarm](https://www.ethswarm.org/).
+## Requirements
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- npm
+- node
+- docker
+- docker-compose
 
-### Compiles and minifies for production
-```
+## Build
+
+To build the project:
+
+```bash
+npm i
 npm run build
 ```
 
-### Run your unit tests
-```
-npm run test:unit
+## Serve
+
+To serve the Frontend with [serve](https://www.npmjs.com/package/serve) run:
+
+```bash
+npm start
 ```
 
-### Run your end-to-end tests
-```
-npm run test:e2e
+To serve the Frontend with [IPFS](https://ipfs.io/) run:
+
+```bash
+IPFS_GATEWAY=<url-to-gateway> npx ts-node scripts/upload-to-ipfs.ts 
 ```
 
-### Lints and fixes files
-```
-npm run lint
+To serve the Frontend with [Swarm](https://www.ethswarm.org/) run:
+
+```bash
+SWARM_API=<url-to-swarm-api> SWARM_DEBUG=<url-to-swarm-debug> npx ts-node scripts/upload-to-swarm.ts 
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Test
+
+To test the project run:
+
+```bash
+npm test
+```
