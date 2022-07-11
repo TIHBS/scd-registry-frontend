@@ -38,8 +38,8 @@
 import { defineProps, onMounted, ref } from "vue";
 import { truncateString } from "@/util/TruncateString";
 import { extractReferenceFromUrl } from "@/util/Swarm";
-import { Registry } from "external/decentralised-scd-registry-common/src/wrappers/Registry";
-import { toBlockchainType } from "../../external/decentralised-scd-registry-common/src/interfaces/Types";
+import { Registry } from "external/scd-registry-common/src/wrappers/Registry";
+import { toBlockchainType } from "../../external/scd-registry-common/src/interfaces/Types";
 
 const props = defineProps<{
   metadata: Registry.SCDMetadataWithIDStructOutput;

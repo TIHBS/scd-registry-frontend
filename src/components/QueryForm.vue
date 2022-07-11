@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref, defineEmits, onMounted, watch } from "vue";
 import { queryService } from "@/components/QueryService";
-import { Registry } from "external/decentralised-scd-registry-common/src/Conversion";
+import { Registry } from "external/scd-registry-common/src/Conversion";
 
 const emit = defineEmits<{
   (e: "queryResults", results: Registry.SCDMetadataWithIDStructOutput[]): void;

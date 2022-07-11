@@ -22,7 +22,7 @@
 import { UploadStatus } from "@/util/Swarm";
 import { UploadResult } from "@ethersphere/bee-js";
 import { onMounted } from "@vue/runtime-core";
-import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { SCD } from "external/scd-registry-common/src/interfaces/SCD";
 import { ref } from "vue";
 import { swarmWizard } from "../storage-wizard/SwarmWizard";
 

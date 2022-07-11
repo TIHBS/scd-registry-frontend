@@ -1,6 +1,6 @@
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { BigNumberish } from "ethers";
-import { Registry } from "external/decentralised-scd-registry-common/src/wrappers/Registry";
+import { Registry } from "external/scd-registry-common/src/wrappers/Registry";
 import { useToast } from "vue-toastification";
 
 interface QueryFunction {

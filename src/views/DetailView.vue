@@ -42,9 +42,9 @@ import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
-import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
+import { Registry } from "../../external/scd-registry-common/src/wrappers/Registry";
 import VueJsonPretty from "vue-json-pretty";
-import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { SCD } from "../../external/scd-registry-common/src/interfaces/SCD";
 import { swarmWizard } from "@/components/storage-wizard/SwarmWizard";
 import { extractReferenceFromUrl } from "@/util/Swarm";
 

@@ -1,4 +1,4 @@
-import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { SCD } from "external/scd-registry-common/src/interfaces/SCD";
 import fetch from "node-fetch";
 
 class WebserverWizard {

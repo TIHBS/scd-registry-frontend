@@ -48,8 +48,8 @@ import WebserverWizard from "@/components/storage-wizard/WebserverWizard.vue";
 import VueJsonPretty from "vue-json-pretty";
 import { computed, ref } from "vue";
 import { ethereumConnector } from "@/ethereum/EthereumConnector";
-import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
-import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
+import { SCD } from "../../external/scd-registry-common/src/interfaces/SCD";
+import { Registry } from "../../external/scd-registry-common/src/wrappers/Registry";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();

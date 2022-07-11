@@ -20,35 +20,35 @@
       "webRoot": "${workspaceFolder}/",
       "pathMappings": [
         {
-          "url": "webpack://decentralised-scd-registry-frontend/WebserverWizard.ts",
+          "url": "webpack://scd-registry-frontend/WebserverWizard.ts",
           "path": "${workspaceFolder}/src/components/storage-wizard/WebserverWizard.ts"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/WebserverWizard.ts",
+          "url": "webpack://scd-registry-frontend/WebserverWizard.ts",
           "path": "${workspaceFolder}/src/components/StorageWizard/WebserverWizard.ts"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/PowergateConnector.ts",
+          "url": "webpack://scd-registry-frontend/PowergateConnector.ts",
           "path": "${workspaceFolder}/src/powergate/PowergateConnector.ts"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "url": "webpack://scd-registry-frontend/src/components",
           "path": "${workspaceFolder}/src/components"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "url": "webpack://scd-registry-frontend/src/components",
           "path": "${workspaceFolder}/src/components"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "url": "webpack://scd-registry-frontend/src/components",
           "path": "${workspaceFolder}/src/components"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/src/metamask",
+          "url": "webpack://scd-registry-frontend/src/metamask",
           "path": "${workspaceFolder}/src/metamask"
         },
         {
-          "url": "webpack://decentralised-scd-registry-frontend/src/components",
+          "url": "webpack://scd-registry-frontend/src/components",
           "path": "${workspaceFolder}/src/components"
         },
         {

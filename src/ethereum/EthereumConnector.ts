@@ -1,10 +1,10 @@
-import { Registry__factory } from "../../external/decentralised-scd-registry-common/src/wrappers/factories/Registry__factory";
+import { Registry__factory } from "../../external/scd-registry-common/src/wrappers/factories/Registry__factory";
 import { BigNumberish, ContractTransaction, ethers, Signer } from "ethers";
-import { Registry } from "../../external/decentralised-scd-registry-common/src/wrappers/Registry";
-import { SCD } from "../../external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { Registry } from "../../external/scd-registry-common/src/wrappers/Registry";
+import { SCD } from "../../external/scd-registry-common/src/interfaces/SCD";
 import { checkIfLoggedIn, connectMetamask } from "@/ethereum/Metamask";
 import { Provider } from "@ethersproject/abstract-provider/lib/index";
-import { fromBlockchainType } from "../../external/decentralised-scd-registry-common/src/interfaces/Types";
+import { fromBlockchainType } from "../../external/scd-registry-common/src/interfaces/Types";
 
 class EthereumConnector {
   private signer: Signer | undefined;

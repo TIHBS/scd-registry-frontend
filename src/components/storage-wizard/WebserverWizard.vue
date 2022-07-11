@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { webserverWizard } from "@/components/storage-wizard/WebserverWizard";
-import { SCD } from "external/decentralised-scd-registry-common/src/interfaces/SCD";
+import { SCD } from "external/scd-registry-common/src/interfaces/SCD";
 
 const emit = defineEmits<{
   (e: "fetchedSCD", scd: SCD, url: string | null): void;
