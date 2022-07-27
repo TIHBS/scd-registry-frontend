@@ -31,7 +31,7 @@ const emit = defineEmits<{
 }>();
 
 // default to make testing easier.
-const url = ref("http://localhost:49160/scd1.json");
+const url = ref("http://172.17.0.1:49160/scd1.json");
 
 async function onSubmit() {
   const result = await webserverWizard.fetchSCD(url.value);
