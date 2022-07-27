@@ -14,7 +14,6 @@
   "dependencies": {
     "@ethersphere/bee-js": "^3.3.4",
     "@metamask/eth-sig-util": "^4.0.0",
-    "@textile/powergate-client": "^4.1.0",
     "bootstrap-icons": "^1.8.1",
     "bootstrap-vue": "^2.21.2",
     "bootstrap-vue-3": "^0.1.9",

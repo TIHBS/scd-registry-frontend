@@ -28,10 +28,6 @@
           "path": "${workspaceFolder}/src/components/StorageWizard/WebserverWizard.ts"
         },
         {
-          "url": "webpack://scd-registry-frontend/PowergateConnector.ts",
-          "path": "${workspaceFolder}/src/powergate/PowergateConnector.ts"
-        },
-        {
           "url": "webpack://scd-registry-frontend/src/components",
           "path": "${workspaceFolder}/src/components"
         },
