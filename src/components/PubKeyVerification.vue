@@ -38,8 +38,6 @@ function verifyPubKey(pubKeyMetadata: string, pubkeyScd: string): boolean {
 
 onMounted(() => {
   try {
-    console.log(props.pubKeyMetadata);
-    console.log(props.pubkeyScd);
     const result = verifyPubKey(props.pubKeyMetadata, props.pubkeyScd);
     state.value = result ? State.EQUAL : State.UNEQUAL;
   } catch (err) {
